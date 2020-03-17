@@ -29,6 +29,6 @@ namespace IndividualProjectCapstone.Data
                     NormalizedName = "OTHER"
                 });
         }
-
+        public DbSet<Renter> Renters { get; set; }
     }
 }
