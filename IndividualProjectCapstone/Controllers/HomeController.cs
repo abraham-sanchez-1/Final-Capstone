@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using IndividualProjectCapstone.Models;
+using System.Security.Claims;
 
 namespace IndividualProjectCapstone.Controllers
 {
@@ -20,6 +21,15 @@ namespace IndividualProjectCapstone.Controllers
 
         public IActionResult Index()
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Redirect("./Identity/Account/Login");
+            }
+            if (User.IsInRole("User"))
+            {
+                return RedirectToAction("Index", "Developers");
+            }
             return View();
         }
 
