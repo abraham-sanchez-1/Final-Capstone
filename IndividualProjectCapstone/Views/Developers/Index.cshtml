@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IndividualProjectCapstone.Models.Developer>
+﻿@model IEnumerable<IndividualProjectCapstone.Models.DeveloperViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,14 +13,15 @@
 <table class="table">
     <thead>
         <tr>
+            @* We will be going with a card design for this project *@
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                Project
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                Owner
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
+                Roles Needed
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DeveloperType)
@@ -38,7 +39,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)

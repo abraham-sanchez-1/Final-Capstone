@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IndividualProjectCapstone.Data;
 using IndividualProjectCapstone.Models;
+using System.Security.Claims;
 
 namespace IndividualProjectCapstone.Controllers
 {
@@ -22,8 +23,16 @@ namespace IndividualProjectCapstone.Controllers
         // GET: Developers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Developers.Include(d => d.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            var viewModel = new DeveloperViewModel();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            if (developer is null)
+            {
+                return RedirectToAction("Create");
+            }
+            //logic for project matching will occur here, for now it will simply be a list of available projects
+            viewModel.Projects = _context.Projects.ToList();
+            return View(viewModel);
         }
 
         // GET: Developers/Details/5
