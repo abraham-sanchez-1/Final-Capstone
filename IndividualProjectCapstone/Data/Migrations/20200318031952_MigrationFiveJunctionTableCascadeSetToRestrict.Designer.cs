@@ -4,14 +4,16 @@ using IndividualProjectCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IndividualProjectCapstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200318031952_MigrationFiveJunctionTableCascadeSetToRestrict")]
+    partial class MigrationFiveJunctionTableCascadeSetToRestrict
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,15 +165,15 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d7ce7ad-c0be-4a83-bfe9-d5357fc4b2a3",
-                            ConcurrencyStamp = "9affa020-052a-4574-8bfe-f2a6a24635d5",
+                            Id = "a7401c26-c946-41bd-be90-bfb15ab90c89",
+                            ConcurrencyStamp = "4b6c0244-c81d-4525-a957-fe05dfb5058d",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9ca519af-10aa-4996-ac6b-e9cddca65e08",
-                            ConcurrencyStamp = "d6886645-6cc2-43fc-a693-f5919746e8e5",
+                            Id = "b5b57836-56a5-4a54-b6f4-469480f58184",
+                            ConcurrencyStamp = "6e20ce39-106d-4761-aeb8-9e65d48acd42",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });

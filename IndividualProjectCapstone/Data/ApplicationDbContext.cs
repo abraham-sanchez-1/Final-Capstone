@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using IndividualProjectCapstone.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,13 @@ namespace IndividualProjectCapstone.Data
         {
             base.OnModelCreating(builder);
 
+            //Set default behavior to not cascade on delete, ==> Unsuccessful
+            //foreach (var foreignKey in builder.Model.GetEntityTypes()
+            //    .SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
+
             builder.Entity<IdentityRole>()
                 .HasData(
                 new IdentityRole
@@ -28,7 +37,11 @@ namespace IndividualProjectCapstone.Data
                     Name = "Other",
                     NormalizedName = "OTHER"
                 });
+               
         }
-        public DbSet<Renter> Renters { get; set; }
+        public DbSet<Developer> Developers { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectMember> ProjectMembers { get; set; }
+        public DbSet<RoleOpening> RoleOpenings { get; set; }
     }
 }

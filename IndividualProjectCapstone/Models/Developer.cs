@@ -22,7 +22,11 @@ namespace IndividualProjectCapstone.Models
         [Display(Name = "Identity User")]
         public string UserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        [Required]
+        [Display(Name = "Type of Developer")]
         public string DeveloperType { get; set; }
+        [Required]
+        [Range(1,4)]
         public int ProficiencyLevel { get; set; }
         public string AboutUser { get; set; }
 

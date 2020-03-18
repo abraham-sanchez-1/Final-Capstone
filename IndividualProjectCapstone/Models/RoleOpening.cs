@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace IndividualProjectCapstone.Models
 {
-    public class ProjectPartner
+    public class RoleOpening
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Developer")]
-        [Display(Name = "Partner")]
-        public int UserId { get; set; }
-        public Developer Developer { get; set; }
+        public string DeveloperTypeNeeded { get; set; }
+        public int ProficiencyLevelNeeded { get; set; }
+        public string ExampleUserStory { get; set; }
         [ForeignKey("Project")]
         [Display(Name = "Project Id")]
         public int ProjectId { get; set; }

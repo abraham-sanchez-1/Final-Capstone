@@ -4,14 +4,16 @@ using IndividualProjectCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IndividualProjectCapstone.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200318022133_MigrationThreeJunctionTableWithNullableValues")]
+    partial class MigrationThreeJunctionTableWithNullableValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DeveloperId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsProjectLead")
                         .HasColumnType("bit");
 
@@ -101,9 +100,9 @@ namespace IndividualProjectCapstone.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeveloperId");
-
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ProjectMembers");
                 });
@@ -163,15 +162,15 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d7ce7ad-c0be-4a83-bfe9-d5357fc4b2a3",
-                            ConcurrencyStamp = "9affa020-052a-4574-8bfe-f2a6a24635d5",
+                            Id = "53f64f6b-05f9-4c90-8df5-b29e4a302c6f",
+                            ConcurrencyStamp = "f9ce7415-47f5-49e4-9655-23a6a1c92a7e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9ca519af-10aa-4996-ac6b-e9cddca65e08",
-                            ConcurrencyStamp = "d6886645-6cc2-43fc-a693-f5919746e8e5",
+                            Id = "4ec0cf42-f6ad-42b1-9188-4b13d55d7a7c",
+                            ConcurrencyStamp = "ee0018ae-c9a7-4134-a4e5-d6367ed265dd",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -350,21 +349,18 @@ namespace IndividualProjectCapstone.Data.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
                 {
-                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.RoleOpening", b =>
@@ -372,7 +368,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -381,7 +377,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -390,7 +386,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -399,7 +395,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -408,13 +404,13 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -423,7 +419,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
