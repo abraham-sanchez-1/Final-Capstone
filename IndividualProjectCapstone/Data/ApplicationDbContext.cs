@@ -37,7 +37,16 @@ namespace IndividualProjectCapstone.Data
                     Name = "Other",
                     NormalizedName = "OTHER"
                 });
-               
+            //builder.Entity<ProjectMember>()
+            // .HasOne(c => c.Developer)
+            // .WithMany()
+            // .OnDelete(DeleteBehavior.NoAction);
+            
+            //builder.Entity<ProjectMember>()
+            // .HasOne(c => c.Project)
+            // .WithMany()
+            // .OnDelete(DeleteBehavior.NoAction);
+           
         }
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Project> Projects { get; set; }

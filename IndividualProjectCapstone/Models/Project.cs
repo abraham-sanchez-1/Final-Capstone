@@ -23,9 +23,9 @@ namespace IndividualProjectCapstone.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime ExpectedEndDate { get; set; }
-        [ForeignKey("Developer")]
-        [Display(Name = "Project Owner")]
-        public int DeveloperId { get; set; }
-        public Developer Developer { get; set; }
+        //[ForeignKey("Developer")]
+        //[Display(Name = "Project Owner")]
+        //public int DeveloperId { get; set; }
+        //public Developer Developer { get; set; }
     }
 }

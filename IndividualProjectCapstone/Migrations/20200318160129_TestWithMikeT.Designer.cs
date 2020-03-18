@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace IndividualProjectCapstone.Data.Migrations
+namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200318020622_MigrationTwoJunctionTableForMembers")]
-    partial class MigrationTwoJunctionTableForMembers
+    [Migration("20200318160129_TestWithMikeT")]
+    partial class TestWithMikeT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,7 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeveloperType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -88,20 +89,20 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("DeveloperId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsProjectLead")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("DeveloperId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectMembers");
                 });
@@ -118,6 +119,9 @@ namespace IndividualProjectCapstone.Data.Migrations
 
                     b.Property<string>("ExampleUserStory")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasPendingApplication")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProficiencyLevelNeeded")
                         .HasColumnType("int");
@@ -161,15 +165,15 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "77313195-d05c-407f-a315-e2f9f5308fa8",
-                            ConcurrencyStamp = "060cc559-7ba0-448f-9d21-81f49a712b8b",
+                            Id = "36ebb952-61b2-4dfe-8355-f435d30c525b",
+                            ConcurrencyStamp = "b5eaecef-58d7-4200-b497-3d58654e6bd8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b26208ef-c004-4fa4-9038-2bdc90d9f298",
-                            ConcurrencyStamp = "1d3652d9-6818-4095-a1ef-e9a0f09e4ad7",
+                            Id = "eafb30c1-53d5-446b-9421-927918221dfe",
+                            ConcurrencyStamp = "7d1d5399-33c3-4062-8b70-bfa64d97f09e",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -353,15 +357,15 @@ namespace IndividualProjectCapstone.Data.Migrations
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
                 {
-                    b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
+                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("DeveloperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
+                    b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -11,14 +11,13 @@ namespace IndividualProjectCapstone.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("DeveloperId")]
-        [Display(Name = "Project Member")]
-        public int UserId { get; set; }
+        [ForeignKey("Developer")]
+        public int DeveloperId { get; set; }
         public Developer Developer { get; set; }
-        [ForeignKey("ProjectId")]
-        [Display(Name = "Project Id")]
+        [ForeignKey("Project")]      
         public int ProjectId { get; set; }
         public Project Project { get; set; }
+        public bool IsProjectLead { get; set; }
         //making values here nullable also doesn't appear to resolve the issue
     }
 }

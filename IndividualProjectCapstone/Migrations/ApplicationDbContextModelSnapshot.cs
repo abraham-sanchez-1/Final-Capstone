@@ -4,16 +4,14 @@ using IndividualProjectCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace IndividualProjectCapstone.Data.Migrations
+namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200318145241_TestNewSetUp")]
-    partial class TestNewSetUp
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,9 +61,6 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DeveloperId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ExpectedEndDate")
                         .HasColumnType("datetime2");
 
@@ -82,8 +77,6 @@ namespace IndividualProjectCapstone.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeveloperId");
-
                     b.ToTable("Projects");
                 });
 
@@ -94,13 +87,13 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DeveloperId")
+                    b.Property<int>("DeveloperId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsProjectLead")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -170,15 +163,15 @@ namespace IndividualProjectCapstone.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ef0f9984-b7bf-4e22-81a3-e4fbc6befda6",
-                            ConcurrencyStamp = "230cf012-7214-4675-b1be-9b99a0784044",
+                            Id = "36ebb952-61b2-4dfe-8355-f435d30c525b",
+                            ConcurrencyStamp = "b5eaecef-58d7-4200-b497-3d58654e6bd8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "49e8ee21-c4e0-4b19-8b6a-fb1eae92fdf8",
-                            ConcurrencyStamp = "42d77860-9c53-4611-8d30-749473a08087",
+                            Id = "eafb30c1-53d5-446b-9421-927918221dfe",
+                            ConcurrencyStamp = "7d1d5399-33c3-4062-8b70-bfa64d97f09e",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -360,20 +353,13 @@ namespace IndividualProjectCapstone.Data.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("IndividualProjectCapstone.Models.Project", b =>
+            modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
                 {
                     b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
                         .WithMany()
                         .HasForeignKey("DeveloperId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
-                {
-                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId");
 
                     b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
                         .WithMany()
