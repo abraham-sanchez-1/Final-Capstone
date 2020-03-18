@@ -14,6 +14,7 @@ namespace IndividualProjectCapstone.Models
         public string DeveloperTypeNeeded { get; set; }
         public int ProficiencyLevelNeeded { get; set; }
         public string ExampleUserStory { get; set; }
+        public bool HasPendingApplication { get; set; }
         [ForeignKey("Project")]
         [Display(Name = "Project Id")]
         public int ProjectId { get; set; }
