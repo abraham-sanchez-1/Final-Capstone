@@ -10,6 +10,10 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="container mt-3">
+    <h2>Projects</h2>
+    <div class="d-flex flex-wrap"
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -23,21 +27,21 @@
             <th>
                 Roles Needed
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.DeveloperType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProficiencyLevel)
+                @Html.DisplayNameFor(model => model.ProficiencyLevel) 
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AboutUser)
+                @Html.DisplayNameFor(model => model.AboutUser)*@
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        @*<tr>
             <td>
                 @Html.DisplayFor(modelItem => item.)
             </td>
@@ -61,7 +65,7 @@
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
-        </tr>
+        </tr>*@
 }
     </tbody>
 </table>

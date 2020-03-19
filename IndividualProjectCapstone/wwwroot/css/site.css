@@ -59,8 +59,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+   
 }
 .footer {
   position: absolute;
@@ -70,4 +71,19 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 /*Abraham's CSS Changes*/
-body 
+body {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+/*Scroll bar changes to match rest of theme*/
+    body::-webkit-scrollbar {
+        width: 0.8rem;
+    }
+
+    body::-webkit-scrollbar-track {
+        background: #0a0a0a;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background: #ffffff;
+    }
