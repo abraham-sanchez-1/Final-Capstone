@@ -77,7 +77,7 @@ body {
 
 /*Scroll bar changes to match rest of theme*/
     body::-webkit-scrollbar {
-        width: 0.8rem;
+        width: 1rem;
     }
 
     body::-webkit-scrollbar-track {
@@ -86,4 +86,5 @@ body {
 
     body::-webkit-scrollbar-thumb {
         background: #ffffff;
+        border-radius: 10px;
     }

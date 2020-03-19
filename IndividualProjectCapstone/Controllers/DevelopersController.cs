@@ -24,12 +24,12 @@ namespace IndividualProjectCapstone.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = new DeveloperViewModel();
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
-            if (developer is null)
-            {
-                return RedirectToAction("Create");
-            }
+            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            //if (developer is null)
+            //{
+            //    return RedirectToAction("Create");
+            //}
             //logic for project matching will occur here, for now it will simply be a list of available projects
             viewModel.Projects = _context.Projects.ToList();
             return View(viewModel);

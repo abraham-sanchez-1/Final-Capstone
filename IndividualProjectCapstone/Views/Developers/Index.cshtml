@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IndividualProjectCapstone.Models.DeveloperViewModel>
+﻿@model IndividualProjectCapstone.Models.DeveloperViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -10,62 +10,79 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@* I will be going with a card design for this project *@
 <div class="container mt-3">
     <h2>Projects</h2>
-    <div class="d-flex flex-wrap"
+    <div class="d-flex flex-wrap">
+        @foreach (var item in Model.Projects)
+        {
+            <div class="card" style="width:600px">
+                <div class="card-body">
+                    <h4 class="card-title">@item.ProjectName</h4>
+                    <p class="card-text">@item.ProjectDescription</p>
+                </div>
+            </div>
+        }
+    </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            @* We will be going with a card design for this project *@
-            <th>
-                Project
-            </th>
-            <th>
-                Owner
-            </th>
-            <th>
-                Roles Needed
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.DeveloperType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProficiencyLevel) 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AboutUser)*@
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        @*<tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeveloperType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProficiencyLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AboutUser)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>*@
-}
-    </tbody>
-</table>
+
+
+
+
+    @*OLD MATERIAL - TO BE REPLACED
+        <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Project
+                </th>
+                <th>
+                    Owner
+                </th>
+                <th>
+                    Roles Needed
+                </th>
+                <th>
+                        @Html.DisplayNameFor(model => model.DeveloperType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProficiencyLevel)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AboutUser)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdentityUser.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DeveloperType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProficiencyLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AboutUser)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>*@
