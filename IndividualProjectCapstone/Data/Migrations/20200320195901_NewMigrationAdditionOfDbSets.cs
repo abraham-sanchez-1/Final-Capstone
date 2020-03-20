@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IndividualProjectCapstone.Migrations
 {
-    public partial class AdditionOfReviewAndNewRelationships : Migration
+    public partial class NewMigrationAdditionOfDbSets : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,34 @@ namespace IndividualProjectCapstone.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReviewContent = table.Column<string>(maxLength: 200, nullable: false),
+                    LeftProjectEarly = table.Column<bool>(nullable: false),
+                    ReviewScore = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -162,6 +190,7 @@ namespace IndividualProjectCapstone.Migrations
                     LastName = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
+                    RoleId = table.Column<int>(nullable: false),
                     DeveloperType = table.Column<string>(nullable: false),
                     ProficiencyLevel = table.Column<int>(nullable: false),
                     AboutUser = table.Column<string>(maxLength: 100, nullable: true)
@@ -169,6 +198,12 @@ namespace IndividualProjectCapstone.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Developers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Developers_RoleTypes_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "RoleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Developers_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -207,15 +242,13 @@ namespace IndividualProjectCapstone.Migrations
                 name: "ProjectMembers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(nullable: false),
                     DeveloperId = table.Column<int>(nullable: false),
                     ProjectId = table.Column<int>(nullable: false),
                     JoinDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectMembers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProjectMembers_Developers_DeveloperId",
                         column: x => x.DeveloperId,
@@ -228,6 +261,12 @@ namespace IndividualProjectCapstone.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_ProjectMembers_RoleTypes_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "RoleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,13 +275,12 @@ namespace IndividualProjectCapstone.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeveloperTypeNeeded = table.Column<string>(nullable: false),
                     ProficiencyLevelNeeded = table.Column<int>(nullable: false),
                     ExampleUserStory = table.Column<string>(nullable: true),
                     HasPendingApplication = table.Column<bool>(nullable: false),
                     IsFilled = table.Column<bool>(nullable: false),
                     ProjectId = table.Column<int>(nullable: false),
-                    ProjectMemberId = table.Column<int>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,24 +290,24 @@ namespace IndividualProjectCapstone.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
-                        name: "FK_RoleOpenings_ProjectMembers_ProjectMemberId",
-                        column: x => x.ProjectMemberId,
-                        principalTable: "ProjectMembers",
+                        name: "FK_RoleOpenings_RoleTypes_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "RoleTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c5824f09-0022-4500-8800-8552130c43a2", "553ff118-fc33-4ec6-b8c7-98d32e04c37e", "User", "USER" });
+                values: new object[] { "c5c9bec4-543c-437f-bf61-717e0aeb1fd3", "7740058f-223d-45ed-95f4-2c14fdc002aa", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "ff85a180-efc8-4827-a9ea-8b75f66349cc", "88e11c00-6eb9-4fa6-91cb-10a7d602d0b5", "Other", "OTHER" });
+                values: new object[] { "405bf09f-51d6-46b9-a375-3dad2615bdda", "d1e8aa12-5ab8-4aa0-a73a-448c9be1d129", "Other", "OTHER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -311,6 +349,11 @@ namespace IndividualProjectCapstone.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Developers_RoleId",
+                table: "Developers",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Developers_UserId",
                 table: "Developers",
                 column: "UserId");
@@ -326,6 +369,11 @@ namespace IndividualProjectCapstone.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProjectMembers_RoleId",
+                table: "ProjectMembers",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_DeveloperId",
                 table: "Projects",
                 column: "DeveloperId");
@@ -336,9 +384,9 @@ namespace IndividualProjectCapstone.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleOpenings_ProjectMemberId",
+                name: "IX_RoleOpenings_RoleId",
                 table: "RoleOpenings",
-                column: "ProjectMemberId");
+                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -359,19 +407,25 @@ namespace IndividualProjectCapstone.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProjectMembers");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
                 name: "RoleOpenings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ProjectMembers");
-
-            migrationBuilder.DropTable(
                 name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "Developers");
+
+            migrationBuilder.DropTable(
+                name: "RoleTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

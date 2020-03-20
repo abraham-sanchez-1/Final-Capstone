@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200320023951_AdditionOfReviewAndNewRelationships")]
-    partial class AdditionOfReviewAndNewRelationships
+    [Migration("20200320195901_NewMigrationAdditionOfDbSets")]
+    partial class NewMigrationAdditionOfDbSets
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,9 @@ namespace IndividualProjectCapstone.Migrations
                     b.Property<int>("ProficiencyLevel")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -56,9 +59,45 @@ namespace IndividualProjectCapstone.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Developers");
+                });
+
+            modelBuilder.Entity("IndividualProjectCapstone.Models.Opening", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ExampleUserStory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasPendingApplication")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFilled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProficiencyLevelNeeded")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleOpenings");
                 });
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.Project", b =>
@@ -105,11 +144,6 @@ namespace IndividualProjectCapstone.Migrations
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
@@ -119,51 +153,55 @@ namespace IndividualProjectCapstone.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasIndex("DeveloperId");
 
                     b.HasIndex("ProjectId");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("ProjectMembers");
                 });
 
-            modelBuilder.Entity("IndividualProjectCapstone.Models.RoleOpening", b =>
+            modelBuilder.Entity("IndividualProjectCapstone.Models.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DeveloperTypeNeeded")
+                    b.Property<bool>("LeftProjectEarly")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReviewContent")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
-                    b.Property<string>("ExampleUserStory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasPendingApplication")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFilled")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProficiencyLevelNeeded")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectMemberId")
+                    b.Property<int>("ReviewScore")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.ToTable("Reviews");
+                });
 
-                    b.HasIndex("ProjectMemberId");
+            modelBuilder.Entity("IndividualProjectCapstone.Models.RoleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.ToTable("RoleOpenings");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -195,15 +233,15 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c5824f09-0022-4500-8800-8552130c43a2",
-                            ConcurrencyStamp = "553ff118-fc33-4ec6-b8c7-98d32e04c37e",
+                            Id = "c5c9bec4-543c-437f-bf61-717e0aeb1fd3",
+                            ConcurrencyStamp = "7740058f-223d-45ed-95f4-2c14fdc002aa",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ff85a180-efc8-4827-a9ea-8b75f66349cc",
-                            ConcurrencyStamp = "88e11c00-6eb9-4fa6-91cb-10a7d602d0b5",
+                            Id = "405bf09f-51d6-46b9-a375-3dad2615bdda",
+                            ConcurrencyStamp = "d1e8aa12-5ab8-4aa0-a73a-448c9be1d129",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -380,9 +418,30 @@ namespace IndividualProjectCapstone.Migrations
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.Developer", b =>
                 {
+                    b.HasOne("IndividualProjectCapstone.Models.RoleType", "RoleType")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("IndividualProjectCapstone.Models.Opening", b =>
+                {
+                    b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IndividualProjectCapstone.Models.RoleType", "RoleType")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.Project", b =>
@@ -407,19 +466,10 @@ namespace IndividualProjectCapstone.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("IndividualProjectCapstone.Models.RoleOpening", b =>
-                {
-                    b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
+                    b.HasOne("IndividualProjectCapstone.Models.RoleType", "RoleType")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IndividualProjectCapstone.Models.ProjectMember", "ProjectMember")
-                        .WithMany()
-                        .HasForeignKey("ProjectMemberId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

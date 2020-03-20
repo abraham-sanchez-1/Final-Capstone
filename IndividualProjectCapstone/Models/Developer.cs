@@ -24,6 +24,9 @@ namespace IndividualProjectCapstone.Models
         [Display(Name = "Identity User")]
         public string UserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+        [ForeignKey("RoleType")]
+        public int RoleId { get; set; }
+        public RoleType RoleType { get; set; }
         [Required]
         [Display(Name = "Type of Developer")]
         public string DeveloperType { get; set; }

@@ -19,13 +19,6 @@ namespace IndividualProjectCapstone.Data
         {
             base.OnModelCreating(builder);
 
-            //Set default behavior to not cascade on delete, ==> Unsuccessful
-            //foreach (var foreignKey in builder.Model.GetEntityTypes()
-            //    .SelectMany(e => e.GetForeignKeys()))
-            //{
-            //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-
             builder.Entity<IdentityRole>()
                 .HasData(
                 new IdentityRole
@@ -37,20 +30,16 @@ namespace IndividualProjectCapstone.Data
                     Name = "Other",
                     NormalizedName = "OTHER"
                 });
-            //builder.Entity<ProjectMember>()
-            // .HasOne(c => c.Developer)
-            // .WithMany()
-            // .OnDelete(DeleteBehavior.NoAction);
-            
-            //builder.Entity<ProjectMember>()
-            // .HasOne(c => c.Project)
-            // .WithMany()
-            // .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<ProjectMember>()
+                .HasNoKey();
            
         }
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
-        public DbSet<RoleOpening> RoleOpenings { get; set; }
+        public DbSet<Opening> RoleOpenings { get; set; }
+        public DbSet<RoleType> RoleTypes { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
     }
 }

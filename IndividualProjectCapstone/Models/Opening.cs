@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace IndividualProjectCapstone.Models
 {
-    public class RoleOpening
+    public class Opening
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [Display(Name = "Type of Developer Needed")]
-        public string DeveloperTypeNeeded { get; set; }
         [Required]
         [Display(Name = "Proficiency Level Needed")]
         public int ProficiencyLevelNeeded { get; set; }
@@ -26,10 +23,9 @@ namespace IndividualProjectCapstone.Models
         public int ProjectId { get; set; }
         public Project Project { get; set; }
 
-        [ForeignKey("ProjectMember")]
-        [Display(Name = "Project Member")]
-        public int ProjectMemberId { get; set; }
-        public ProjectMember ProjectMember { get; set; }
+        [ForeignKey("RoleType")]
+        public int RoleId { get; set; }
+        public RoleType RoleType { get; set; }
         
 
     }

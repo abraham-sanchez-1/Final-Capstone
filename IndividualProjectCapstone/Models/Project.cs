@@ -33,5 +33,10 @@ namespace IndividualProjectCapstone.Models
         [Display(Name = "Project Owner")]
         public int DeveloperId { get; set; }
         public Developer Developer { get; set; }
+
+        [NotMapped]
+        public List<Opening> Openings { get; set; }
+        [NotMapped]
+        public List<ProjectMember> ProjectMembers { get; set; }
     }
 }

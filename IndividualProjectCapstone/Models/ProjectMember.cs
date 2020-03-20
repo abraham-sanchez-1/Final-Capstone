@@ -9,8 +9,9 @@ namespace IndividualProjectCapstone.Models
 {
     public class ProjectMember
     {
-        [Key]
-        public int Id { get; set; }
+        [ForeignKey("RoleType")]
+        public int RoleId { get; set; }
+        public RoleType RoleType { get; set; }
         [ForeignKey("Developer")]
         public int DeveloperId { get; set; }
         public Developer Developer { get; set; }

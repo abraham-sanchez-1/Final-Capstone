@@ -10,6 +10,6 @@ namespace IndividualProjectCapstone.Models
         public Developer Developer { get; set; }
         public List<ProjectMember> ProjectMembers { get; set; }
         public List<Project> Projects { get; set; }
-        public List<RoleOpening> RoleOpenings { get; set; }
+        public List<Opening> RoleOpenings { get; set; }
     }
 }
