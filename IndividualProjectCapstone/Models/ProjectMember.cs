@@ -17,7 +17,6 @@ namespace IndividualProjectCapstone.Models
         [ForeignKey("Project")]      
         public int ProjectId { get; set; }
         public Project Project { get; set; }
-        public bool IsProjectLead { get; set; }
-        //making values here nullable also doesn't appear to resolve the issue
+        public DateTime JoinDate { get; set; }
     }
 }

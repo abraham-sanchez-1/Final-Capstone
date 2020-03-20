@@ -16,8 +16,8 @@
     <div class="card-columns">
         @foreach (var item in Model.Projects)
         {
-            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;" >
-                <div class="card-header">.Net Stack</div>
+            <div class="card text-white bg-primary m-4" style="width: 20rem; height: 15rem;" >
+                <div class="card-header"><span class="badge badge-pill badge-info">Angular</span><span class="badge badge-pill badge-info"></span></div>
                 <div class="card-body text-center">
                     <h4 class="card-title">@item.ProjectName</h4>
                     <p class="card-text">@item.ProjectDescription</p>
@@ -27,13 +27,6 @@
     </div>
 </div>
 
-<div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-</div>
 
 
 

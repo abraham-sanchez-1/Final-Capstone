@@ -18,6 +18,8 @@ namespace IndividualProjectCapstone.Models
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        [Required]
+        public string UserName { get; set; }
         [ForeignKey("IdentityUser")]
         [Display(Name = "Identity User")]
         public string UserId { get; set; }
@@ -28,7 +30,9 @@ namespace IndividualProjectCapstone.Models
         [Required]
         [Range(1,4)]
         public int ProficiencyLevel { get; set; }
+        [StringLength(100, ErrorMessage = "You have gone over the 100 character limit!")]
         public string AboutUser { get; set; }
+        
 
     }
 }
