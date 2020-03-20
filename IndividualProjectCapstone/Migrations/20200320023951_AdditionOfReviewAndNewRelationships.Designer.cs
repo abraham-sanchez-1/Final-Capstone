@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200318160129_TestWithMikeT")]
-    partial class TestWithMikeT
+    [Migration("20200320023951_AdditionOfReviewAndNewRelationships")]
+    partial class AdditionOfReviewAndNewRelationships
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,7 +29,8 @@ namespace IndividualProjectCapstone.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AboutUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("DeveloperType")
                         .IsRequired()
@@ -49,6 +50,10 @@ namespace IndividualProjectCapstone.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -63,21 +68,37 @@ namespace IndividualProjectCapstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ExpectedEndDate")
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("DeveloperId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProjectDescription")
+                    b.Property<bool>("IsComplete")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProjectName")
+                    b.Property<string>("PrimaryTechnology")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ProjectStartDate")
+                    b.Property<string>("SecondaryTechnology")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeveloperId");
 
                     b.ToTable("Projects");
                 });
@@ -92,8 +113,8 @@ namespace IndividualProjectCapstone.Migrations
                     b.Property<int>("DeveloperId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsProjectLead")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("JoinDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
@@ -115,6 +136,7 @@ namespace IndividualProjectCapstone.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("DeveloperTypeNeeded")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExampleUserStory")
@@ -123,15 +145,23 @@ namespace IndividualProjectCapstone.Migrations
                     b.Property<bool>("HasPendingApplication")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFilled")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ProficiencyLevelNeeded")
                         .HasColumnType("int");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProjectMemberId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("ProjectMemberId");
 
                     b.ToTable("RoleOpenings");
                 });
@@ -165,15 +195,15 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "36ebb952-61b2-4dfe-8355-f435d30c525b",
-                            ConcurrencyStamp = "b5eaecef-58d7-4200-b497-3d58654e6bd8",
+                            Id = "c5824f09-0022-4500-8800-8552130c43a2",
+                            ConcurrencyStamp = "553ff118-fc33-4ec6-b8c7-98d32e04c37e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "eafb30c1-53d5-446b-9421-927918221dfe",
-                            ConcurrencyStamp = "7d1d5399-33c3-4062-8b70-bfa64d97f09e",
+                            Id = "ff85a180-efc8-4827-a9ea-8b75f66349cc",
+                            ConcurrencyStamp = "88e11c00-6eb9-4fa6-91cb-10a7d602d0b5",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -355,6 +385,15 @@ namespace IndividualProjectCapstone.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("IndividualProjectCapstone.Models.Project", b =>
+                {
+                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
+                        .WithMany()
+                        .HasForeignKey("DeveloperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("IndividualProjectCapstone.Models.ProjectMember", b =>
                 {
                     b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
@@ -375,6 +414,12 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasOne("IndividualProjectCapstone.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IndividualProjectCapstone.Models.ProjectMember", "ProjectMember")
+                        .WithMany()
+                        .HasForeignKey("ProjectMemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

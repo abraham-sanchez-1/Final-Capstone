@@ -17,10 +17,11 @@
         @foreach (var item in Model.Projects)
         {
             <div class="card text-white bg-primary m-4" style="width: 20rem; height: 15rem;" >
-                <div class="card-header"><span class="badge badge-pill badge-info">Angular</span><span class="badge badge-pill badge-info"></span></div>
+                <div class="card-header"><span class="badge badge-pill badge-info">@item.PrimaryTechnology</span><span class="badge badge-pill badge-info">@item.SecondaryTechnology</span></div>
                 <div class="card-body text-center">
-                    <h4 class="card-title">@item.ProjectName</h4>
-                    <p class="card-text">@item.ProjectDescription</p>
+                    <h4 class="card-title">@item.Name</h4>
+                    <p class="card-text">@item.Description</p>
+                    <p class="card-text">Project Owner: @item.Developer.UserName</p>
                 </div>
             </div>
         }
