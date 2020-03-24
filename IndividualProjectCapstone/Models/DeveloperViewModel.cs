@@ -7,9 +7,7 @@ namespace IndividualProjectCapstone.Models
 {
     public class DeveloperViewModel
     {
-        public Developer Developer { get; set; }
-        public List<ProjectMember> ProjectMembers { get; set; }
-        public List<Project> Projects { get; set; }
-        public List<Opening> RoleOpenings { get; set; }
+        public Developer CurrentUser { get; set; }
+        public List<ProjectViewModel> AllProjects {get; set;}
     }
 }

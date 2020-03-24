@@ -23,16 +23,27 @@ namespace IndividualProjectCapstone.Controllers
         // GET: Developers
         public async Task<IActionResult> Index()
         {
-            var viewModel = new DeveloperViewModel();
-            //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
-            //if (developer is null)
-            //{
-            //    return RedirectToAction("Create");
-            //}
-            //logic for project matching will occur here, for now it will simply be a list of available projects
-            viewModel.Projects = _context.Projects.ToList();
-            return View(viewModel);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            if (developer is null)
+            {
+                return RedirectToAction("Create");
+            }
+            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
+            _developerViewModel.CurrentUser = developer;
+            foreach (var eachProject in _context.Projects)
+            {
+                var projectId = eachProject.Id;
+                ProjectViewModel _projectViewModel = new ProjectViewModel();
+                _projectViewModel.Project = eachProject;
+                _projectViewModel.Openings = _context.RoleOpenings.Where(m => m.ProjectId == projectId).ToList();
+                _projectViewModel.DevelopersInProject = _context.ProjectMembers.Where()
+
+            }
+            
+            
+
+            return View();
         }
 
         // GET: Developers/Details/5

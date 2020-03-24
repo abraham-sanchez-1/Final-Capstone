@@ -14,14 +14,18 @@
 <div class="container">
     <h2>Projects</h2>
     <div class="card-columns">
-        @foreach (var item in Model.Projects)
+        @foreach (var EachProject in Model.Projects)
         {
             <div class="card text-white bg-primary m-4" style="width: 20rem; height: 15rem;" >
-                <div class="card-header"><span class="badge badge-pill badge-info">@item.PrimaryTechnology</span><span class="badge badge-pill badge-info">@item.SecondaryTechnology</span></div>
+                <div class="card-header"><span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span></div>
                 <div class="card-body text-center">
-                    <h4 class="card-title">@item.Name</h4>
-                    <p class="card-text">@item.Description</p>
-                    <p class="card-text">Project Owner: @item.Developer.UserName</p>
+                    <h4 class="card-title">@EachProject.Project.Name</h4>@EachProject.Project.
+                    <p class="card-text">@EachProject.Project.Description</p>
+                    <p class="card-text">Project Owner: @EachProject.Project.Developer.UserName</p>
+                    @foreach (var EachOpening in EachProject.Openings)
+                    {
+                        <p></p>
+                    }
                 </div>
             </div>
         }
