@@ -29,21 +29,30 @@ namespace IndividualProjectCapstone.Controllers
             {
                 return RedirectToAction("Create");
             }
+            //DeveloperViewModel _developerViewModel = new DeveloperViewModel();
+            //_developerViewModel.CurrentUser = developer;
+            //foreach (var eachProject in _context.Projects)
+            //{
+            //    var projectId = eachProject.Id;
+            //    ProjectViewModel _projectViewModel = new ProjectViewModel();
+            //    _projectViewModel.Project = eachProject;
+            //    _projectViewModel.Openings = _context.RoleOpenings.Where(m => m.ProjectId == projectId).ToList();
+            //    _projectViewModel.DevelopersInProject = _context.Developers.Where(m => _context.ProjectMembers.Where(p => p.ProjectId == projectId).Select(p => p.DeveloperId).ToList().Contains(m.Id)).ToList();
+            //    _developerViewModel.Add(_projectViewModel);
+            //}
+
+            List<Project> projects = _context.Projects.ToList();
+
+            foreach(Project project in projects)
+            {
+                project.Openings = _context.RoleOpenings.Where(o => o.ProjectId == project.Id).ToList();
+                project.ProjectMembers = _context.ProjectMembers.Include(p => p.Developer).Include(p => p.RoleType).Where(p => p.ProjectId == project.Id).ToList();
+            }
             DeveloperViewModel _developerViewModel = new DeveloperViewModel();
             _developerViewModel.CurrentUser = developer;
-            foreach (var eachProject in _context.Projects)
-            {
-                var projectId = eachProject.Id;
-                ProjectViewModel _projectViewModel = new ProjectViewModel();
-                _projectViewModel.Project = eachProject;
-                _projectViewModel.Openings = _context.RoleOpenings.Where(m => m.ProjectId == projectId).ToList();
-                _projectViewModel.DevelopersInProject = _context.ProjectMembers.Where()
-
-            }
-            
-            
-
-            return View();
+            _developerViewModel.AllProjects = projects;
+            return View(projects);
+            //List<Projects>
         }
 
         // GET: Developers/Details/5

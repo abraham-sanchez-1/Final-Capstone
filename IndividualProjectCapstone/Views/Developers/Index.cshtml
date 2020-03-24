@@ -14,7 +14,7 @@
 <div class="container">
     <h2>Projects</h2>
     <div class="card-columns">
-        @foreach (var EachProject in Model.Projects)
+        @foreach (var EachProject in Model)
         {
             <div class="card text-white bg-primary m-4" style="width: 20rem; height: 15rem;" >
                 <div class="card-header"><span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span></div>

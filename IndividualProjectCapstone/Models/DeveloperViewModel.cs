@@ -8,6 +8,6 @@ namespace IndividualProjectCapstone.Models
     public class DeveloperViewModel
     {
         public Developer CurrentUser { get; set; }
-        public List<ProjectViewModel> AllProjects {get; set;}
+        public List<Project> AllProjects {get; set;}
     }
 }
