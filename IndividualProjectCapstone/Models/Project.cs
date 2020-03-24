@@ -37,6 +37,6 @@ namespace IndividualProjectCapstone.Models
         [NotMapped]
         public List<Opening> Openings { get; set; }
         [NotMapped]
-        public List<ProjectMember> ProjectMembers { get; set; }
+        public List<Developer> DeveloperMembers { get; set; }
     }
 }

@@ -14,18 +14,34 @@
 <div class="container">
     <h2>Projects</h2>
     <div class="card-columns">
-        @foreach (var EachProject in Model)
+        @foreach (var EachProject in Model.AllProjects)
         {
-            <div class="card text-white bg-primary m-4" style="width: 20rem; height: 15rem;" >
-                <div class="card-header"><span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span></div>
+            <div class="card text-white bg-primary m-4" style="width: 25rem; height: 15rem;" >
+                <div class="card-header">@EachProject.Name</div>
                 <div class="card-body text-center">
-                    <h4 class="card-title">@EachProject.Project.Name</h4>@EachProject.Project.
-                    <p class="card-text">@EachProject.Project.Description</p>
-                    <p class="card-text">Project Owner: @EachProject.Project.Developer.UserName</p>
+                    <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
+                    <p class="card-text">@EachProject.Description</p>
+                    <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
                     @foreach (var EachOpening in EachProject.Openings)
+                    {@if (EachOpening.IsFilled == false)
+                        {
+                            <p class="card-text">@EachOpening.RoleType: @EachOpening.ProficiencyLevelNeeded</p>
+                        }
+
+                }
+                    @if (EachProject.DeveloperMembers is null)
                     {
-                        <p></p>
+                        <p class="card-text text-warning">No current members</p>
                     }
+                    else
+                    {
+                        @foreach (var EachMember in EachProject.DeveloperMembers)
+                        {
+                            <p class="card-text ">@EachMember.UserName: @EachMember.RoleType</p>
+
+                        }
+                    }
+
                 </div>
             </div>
         }

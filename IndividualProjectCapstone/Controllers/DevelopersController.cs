@@ -45,8 +45,9 @@ namespace IndividualProjectCapstone.Controllers
 
             foreach(Project project in projects)
             {
+                var projectId = project.Id;
                 project.Openings = _context.RoleOpenings.Where(o => o.ProjectId == project.Id).ToList();
-                project.ProjectMembers = _context.ProjectMembers.Include(p => p.Developer).Include(p => p.RoleType).Where(p => p.ProjectId == project.Id).ToList();
+                project.DeveloperMembers = _context.Developers.Where(m => _context.ProjectMembers.Where(p => p.ProjectId == projectId).Select(p => p.DeveloperId).ToList().Contains(m.Id)).Include(p => p.RoleType).ToList();
             }
             DeveloperViewModel _developerViewModel = new DeveloperViewModel();
             _developerViewModel.CurrentUser = developer;
