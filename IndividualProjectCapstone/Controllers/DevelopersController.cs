@@ -45,7 +45,7 @@ namespace IndividualProjectCapstone.Controllers
 
             foreach(Project project in projects)
             {
-                project.Openings = _context.RoleOpenings.Where(o => o.ProjectId == project.Id).ToList();
+                project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
                 project.DeveloperMembers = _context.Developers
                             .Where(m => _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
                             .Select(p => p.DeveloperId)

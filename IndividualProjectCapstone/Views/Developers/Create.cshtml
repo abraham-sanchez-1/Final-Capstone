@@ -24,21 +24,34 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group hidden">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="DeveloperType" class="control-label"></label>
-                <input asp-for="DeveloperType" class="form-control" />
-                <span asp-validation-for="DeveloperType" class="text-danger"></span>
+                <label class="control-label">What type of developer are you?</label>
+                <select asp-for="RoleId" class="form-control">
+                    <option value="1">Front End Development</option>
+                    <option value="2">Back End Development</option>
+                    <option value="3">Full Stack Development</option>
+                    <option value="4">Database Engineering</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="ProficiencyLevel" class="control-label"></label>
-                <input asp-for="ProficiencyLevel" class="form-control" />
-                <span asp-validation-for="ProficiencyLevel" class="text-danger"></span>
+                <label class="control-label">What type of developer are you?</label>
+                <select asp-for="RoleId" class="form-control">
+                    <option value="1">Beginner</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Advanced</option>
+                    <option value="4">Expert</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="AboutUser" class="control-label"></label>
+                <label class="control-label">Tell users a little about yourself!<i>100 characters or less</i></label>
                 <input asp-for="AboutUser" class="form-control" />
                 <span asp-validation-for="AboutUser" class="text-danger"></span>
             </div>

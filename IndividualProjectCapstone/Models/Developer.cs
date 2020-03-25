@@ -28,9 +28,6 @@ namespace IndividualProjectCapstone.Models
         public int RoleId { get; set; }
         public RoleType RoleType { get; set; }
         [Required]
-        [Display(Name = "Type of Developer")]
-        public string DeveloperType { get; set; }
-        [Required]
         [Range(1,4)]
         public int ProficiencyLevel { get; set; }
         [StringLength(100, ErrorMessage = "You have gone over the 100 character limit!")]

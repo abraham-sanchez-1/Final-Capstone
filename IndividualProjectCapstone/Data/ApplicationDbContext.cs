@@ -37,7 +37,7 @@ namespace IndividualProjectCapstone.Data
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
-        public DbSet<Opening> RoleOpenings { get; set; }
+        public DbSet<Opening> Openings { get; set; }
         public DbSet<RoleType> RoleTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
