@@ -117,18 +117,19 @@ namespace IndividualProjectCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProject(Developer developer)
+        public async Task<IActionResult> CreateProject(Project project)
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var _developer = developer;
-                _context.Developers.Add(_developer);
+                var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+                var _project = project;
+                _project.DeveloperId = developer.Id;
+                _context.Projects.Add(_project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", developer.UserId);
-            return View(developer);
+            return View(project);
         }
 
         // GET: Developers/Edit/5
