@@ -56,7 +56,7 @@ namespace IndividualProjectCapstone.Controllers
             DeveloperViewModel _developerViewModel = new DeveloperViewModel();
             _developerViewModel.CurrentUser = developer;
             _developerViewModel.AllProjects = projects;
-            return View(projects);
+            return View(_developerViewModel);
             //List<Projects>
         }
 
