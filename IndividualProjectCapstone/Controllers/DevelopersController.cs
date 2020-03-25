@@ -97,6 +97,32 @@ namespace IndividualProjectCapstone.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var _developer = developer;
+                _developer.UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                _context.Developers.Add(_developer);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", developer.UserId);
+            return View(developer);
+        }
+        // GET: Projects/Create
+        public IActionResult CreateProject()
+        {
+            
+            return View();
+        }
+
+        // POST: Developers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProject(Developer developer)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var _developer = developer;
                 _context.Developers.Add(_developer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
