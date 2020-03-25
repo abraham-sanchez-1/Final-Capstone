@@ -45,9 +45,13 @@ namespace IndividualProjectCapstone.Controllers
 
             foreach(Project project in projects)
             {
-                var projectId = project.Id;
                 project.Openings = _context.RoleOpenings.Where(o => o.ProjectId == project.Id).ToList();
-                project.DeveloperMembers = _context.Developers.Where(m => _context.ProjectMembers.Where(p => p.ProjectId == projectId).Select(p => p.DeveloperId).ToList().Contains(m.Id)).Include(p => p.RoleType).ToList();
+                project.DeveloperMembers = _context.Developers
+                            .Where(m => _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
+                            .Select(p => p.DeveloperId)
+                            .ToList()
+                            .Contains(m.Id))
+                            .ToList();
             }
             DeveloperViewModel _developerViewModel = new DeveloperViewModel();
             _developerViewModel.CurrentUser = developer;
@@ -87,11 +91,13 @@ namespace IndividualProjectCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,UserId,DeveloperType,ProficiencyLevel,AboutUser")] Developer developer)
+        public async Task<IActionResult> Create(Developer developer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(developer);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var _developer = developer;
+                _context.Developers.Add(_developer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
