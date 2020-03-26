@@ -191,10 +191,13 @@ namespace IndividualProjectCapstone.Controllers
         }
 
         // GET: CreateRole/Create
-        public IActionResult CreateRole()
+        public IActionResult CreateRole(int? Id)
         {
-
-            return View();
+            var projectId = Id;
+            var _project = _context.Projects.Where(m => m.Id == projectId).FirstOrDefault();
+            RoleViewModel roleViewModel = new RoleViewModel();
+            roleViewModel.Project = _project;
+            return View(roleViewModel);
         }
 
         // POST: Developers/Create
@@ -202,7 +205,7 @@ namespace IndividualProjectCapstone.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateRole(Project project)
+        public async Task<IActionResult> CreateRole(RoleViewModel roleViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -210,7 +213,7 @@ namespace IndividualProjectCapstone.Controllers
                 var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
                 var _project = project;
                 _project.DeveloperId = developer.Id;
-                _context.Projects.Add(_project);
+                _context.Openings.Add(_project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

@@ -30,6 +30,7 @@
                     <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
                     <p class="card-text">@EachProject.Description</p>
                     <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
+                    <a asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
                         {
@@ -52,7 +53,7 @@
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                           
+
                             <input type="hidden" asp-for="AboutUser" class="form-control" />
                             <span asp-validation-for="AboutUser" class="text-danger"></span>
                         </div>
