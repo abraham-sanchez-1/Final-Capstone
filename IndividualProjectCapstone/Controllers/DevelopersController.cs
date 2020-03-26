@@ -183,6 +183,7 @@ namespace IndividualProjectCapstone.Controllers
                 var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
                 var _project = project;
                 _project.DeveloperId = developer.Id;
+                _project.StartDate = DateTime.Now;
                 _context.Projects.Add(_project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(ProjectIndex));

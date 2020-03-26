@@ -30,7 +30,7 @@
                     <span class="badge badge-pill badge-light">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-light">@EachProject.SecondaryTechnology</span>
                     <p class="card-text">@EachProject.Description</p>
                     <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
-                    <a asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
+                    <a type="button" class="btn btn-warning" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
