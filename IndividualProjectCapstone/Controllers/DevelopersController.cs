@@ -210,14 +210,16 @@ namespace IndividualProjectCapstone.Controllers
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
-                var _project = project;
-                _project.DeveloperId = developer.Id;
-                _context.Openings.Add(_project);
+                var viewOpening = roleViewModel.Opening;
+                Opening newOpening = new Opening();
+                var currentProjectId = roleViewModel.Project.Id;
+                newOpening = viewOpening;
+                newOpening.ProjectId = currentProjectId;
+                _context.Openings.Add(newOpening);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(project);
+            return View(roleViewModel);
         }
 
 

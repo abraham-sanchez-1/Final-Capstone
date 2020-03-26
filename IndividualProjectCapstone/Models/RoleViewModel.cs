@@ -8,7 +8,6 @@ namespace IndividualProjectCapstone.Models
     public class RoleViewModel
     {
         public Project Project { get; set; }
-        public RoleType RoleType { get; set; }
         public Opening Opening { get; set; }
     }
 }
