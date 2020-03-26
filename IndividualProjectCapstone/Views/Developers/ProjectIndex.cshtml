@@ -1,18 +1,25 @@
 ﻿@model IndividualProjectCapstone.Models.DeveloperViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "OwnProjects";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="ProjectIndex">Take a look at your Projects!</a>
+    <a asp-action="CreateProject">Create A Project!</a>
 </p>
 @* I will be going with a card design for this project *@
 <div class="container">
     <h2>Projects</h2>
+    @if (Model.AllProjects is null)
+    {
+<div class="jumbotron">
+    <h1>Looks like you don't have any projects!</h1> 
+</div>
+    }
+    
     <div class="card-columns">
         @foreach (var EachProject in Model.AllProjects)
         {

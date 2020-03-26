@@ -46,12 +46,40 @@ namespace IndividualProjectCapstone.Controllers
             foreach(Project project in projects)
             {
                 project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
+                var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
+                             .Select(p => p.DeveloperId)
+                             .ToList();
                 project.DeveloperMembers = _context.Developers
-                            .Where(m => _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
-                            .Select(p => p.DeveloperId)
-                            .ToList()
-                            .Contains(m.Id))
-                            .ToList();
+                             .Where(m => developerIds.Contains(m.Id))
+                             .ToList();
+            }
+            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
+            _developerViewModel.CurrentUser = developer;
+            _developerViewModel.AllProjects = projects;
+            return View(_developerViewModel);
+            //List<Projects>
+        }
+
+        // GET: Developers
+        public async Task<IActionResult> ProjectIndex()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            if (developer is null)
+            {
+                return RedirectToAction("Create");
+            }
+            List<Project> projects = _context.Projects.Where(m => m.DeveloperId == developer.Id).ToList();
+
+            foreach (Project project in projects)
+            {
+                project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
+                var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
+                             .Select(p => p.DeveloperId)
+                             .ToList();
+                project.DeveloperMembers = _context.Developers
+                             .Where(m => developerIds.Contains(m.Id))
+                             .ToList();
             }
             DeveloperViewModel _developerViewModel = new DeveloperViewModel();
             _developerViewModel.CurrentUser = developer;
@@ -131,6 +159,34 @@ namespace IndividualProjectCapstone.Controllers
             }
             return View(project);
         }
+
+        // GET: CreateRole/Create
+        public IActionResult CreateRole()
+        {
+
+            return View();
+        }
+
+        // POST: Developers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRole(Project project)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+                var _project = project;
+                _project.DeveloperId = developer.Id;
+                _context.Projects.Add(_project);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(project);
+        }
+
 
         // GET: Developers/Edit/5
         public async Task<IActionResult> Edit(int? id)
