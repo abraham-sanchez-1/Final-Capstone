@@ -32,7 +32,7 @@ namespace IndividualProjectCapstone.Models
         public int ProficiencyLevel { get; set; }
         [StringLength(100, ErrorMessage = "You have gone over the 100 character limit!")]
         public string AboutUser { get; set; }
-        
+        public string UrlPicture { get; set; }
 
     }
 }

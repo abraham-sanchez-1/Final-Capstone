@@ -28,6 +28,7 @@ namespace IndividualProjectCapstone.Models
         [Display(Name = "Primary Technology")]
         public string PrimaryTechnology { get; set; }
         public string SecondaryTechnology { get; set; }
+        public string GithubUrl { get; set; }
         public bool IsComplete { get; set; }
         [ForeignKey("Developer")]
         [Display(Name = "Project Owner")]

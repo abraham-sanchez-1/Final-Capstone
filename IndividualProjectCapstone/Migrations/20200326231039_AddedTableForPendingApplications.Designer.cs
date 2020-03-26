@@ -4,14 +4,16 @@ using IndividualProjectCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200326231039_AddedTableForPendingApplications")]
+    partial class AddedTableForPendingApplications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,28 +97,6 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Openings");
-                });
-
-            modelBuilder.Entity("IndividualProjectCapstone.Models.PendingApplication", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DeveloperId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OpeningId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeveloperId");
-
-                    b.HasIndex("OpeningId");
-
-                    b.ToTable("PendingApplications");
                 });
 
             modelBuilder.Entity("IndividualProjectCapstone.Models.Project", b =>
@@ -255,15 +235,15 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f93e28cb-3276-474f-8bc3-e952a3f00404",
-                            ConcurrencyStamp = "941bebeb-7113-43a7-bbd6-3d22ff38db9f",
+                            Id = "6f2017e8-24c3-4c86-86c9-6a377d110fce",
+                            ConcurrencyStamp = "03b85aea-03cf-4007-ab1a-fcbbe98f44ed",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "cd732602-050d-4fcb-9c76-b4a135db5814",
-                            ConcurrencyStamp = "9d7657c2-a396-4e69-a499-0a5a2c7c341a",
+                            Id = "7629a4ef-abf2-4f10-bf37-1d10902b2b37",
+                            ConcurrencyStamp = "96a9054e-7b18-4ed7-8dd9-6f51a6c5e04f",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });
@@ -462,21 +442,6 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasOne("IndividualProjectCapstone.Models.RoleType", "RoleType")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("IndividualProjectCapstone.Models.PendingApplication", b =>
-                {
-                    b.HasOne("IndividualProjectCapstone.Models.Developer", "Developer")
-                        .WithMany()
-                        .HasForeignKey("DeveloperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IndividualProjectCapstone.Models.Opening", "Opening")
-                        .WithMany()
-                        .HasForeignKey("OpeningId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

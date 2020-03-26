@@ -40,6 +40,7 @@ namespace IndividualProjectCapstone.Data
         public DbSet<Opening> Openings { get; set; }
         public DbSet<RoleType> RoleTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<PendingApplication> PendingApplications { get; set; }
 
     }
 }

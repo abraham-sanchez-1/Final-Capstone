@@ -277,20 +277,9 @@ namespace IndividualProjectCapstone.Controllers
         // GET: Developers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var _project = _context.Projects.Where(m => m.Id == id).FirstOrDefault();
 
-            var developer = await _context.Developers
-                .Include(d => d.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (developer == null)
-            {
-                return NotFound();
-            }
-
-            return View(developer);
+            return View(_project);
         }
 
         // POST: Developers/Delete/5
@@ -298,10 +287,12 @@ namespace IndividualProjectCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var developer = await _context.Developers.FindAsync(id);
-            _context.Developers.Remove(developer);
+            var _Project = await _context.Projects.FindAsync(id);
+            var _Openings = await _context.Openings.Where(m => m.ProjectId == id).ToListAsync();
+            //var _PendingApplications = await _context.pe
+            _context.Projects.Remove(_Project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ProjectIndex));
         }
 
         private bool DeveloperExists(int id)
