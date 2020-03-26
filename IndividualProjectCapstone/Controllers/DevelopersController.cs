@@ -62,8 +62,36 @@ namespace IndividualProjectCapstone.Controllers
             //List<Projects>
         }
 
-        // GET: Developers
+        // GET: Own Projects
         public async Task<IActionResult> ProjectIndex()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            if (developer is null)
+            {
+                return RedirectToAction("Create");
+            }
+            List<Project> projects = _context.Projects.Where(m => m.DeveloperId == developer.Id).ToList();
+
+            foreach (Project project in projects)
+            {
+                project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
+                var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
+                             .Select(p => p.DeveloperId)
+                             .ToList();
+                project.DeveloperMembers = _context.Developers
+                             .Where(m => developerIds.Contains(m.Id))
+                             .ToList();
+            }
+            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
+            _developerViewModel.CurrentUser = developer;
+            _developerViewModel.AllProjects = projects;
+            return View(_developerViewModel);
+            //List<Projects>
+        }
+
+        // GET: Roles by Id
+        public async Task<IActionResult> RoleIndex(int? Id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
