@@ -16,9 +16,9 @@
     <h2>Projects</h2>
     @if (Model.AllProjects is null)
     {
-<div class="jumbotron">
-    <h1>Looks like you don't have any projects!</h1> 
-</div>
+        <div class="jumbotron">
+            <h1>Looks like you don't have any projects!</h1> 
+        </div>
     }
     
     <div class="card-columns">
@@ -30,70 +30,71 @@
                     <span class="badge badge-pill badge-light">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-light">@EachProject.SecondaryTechnology</span>
                     <p class="card-text">@EachProject.Description</p>
                     <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
-                    <a type="button" class="btn btn-warning" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
+                    <a type="button" class="btn btn-warning btn-sm" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
-            {
-                <p class="card-text">
-                    @if (EachOpening.RoleId == 1)
-                    {
-                        <span class="badge badge-pill badge-info">Front-end</span>
-                    }
-                    else if (EachOpening.RoleId == 2)
-                    {
-                        <span class="badge badge-pill badge-info">Back-end</span>
-                    }
-                    else if (EachOpening.RoleId == 3)
-                    {
-                        <span class="badge badge-pill badge-info">Full-Stack</span>
-
-                    }
-                    else
-                    {
-                        <span class="badge badge-pill badge-info">DT-Engineer</span>
-                    }:
-                    @if (EachOpening.ProficiencyLevelNeeded == 1)
-                    {
-                        <span class="badge badge-pill badge-success">Beginner</span>
-                    }
-                    else if (EachOpening.ProficiencyLevelNeeded == 2)
-                    {
-                        <span class="badge badge-pill badge-warning">Intermediate</span>
-                    }
-                    else if (EachOpening.ProficiencyLevelNeeded == 3)
-                    {
-                        <span class="badge badge-pill badge-light">Advanced</span>
-                    }
-                    else
-                    {
-                        <span class="badge badge-pill badge-warning">Expert</span>
-                    }
-                </p>
-
-
-
-                                @if (EachProject.DeveloperMembers is null)
+                        {
+                            <p class="card-text">
+                                @if (EachOpening.RoleId == 1)
                                 {
-                                    <p class="card-text text-warning">No current members</p>
+                                    <span class="badge badge-pill badge-info">Front-end</span>
+                                }
+                                else if (EachOpening.RoleId == 2)
+                                {
+                                    <span class="badge badge-pill badge-info">Back-end</span>
+                                }
+                                else if (EachOpening.RoleId == 3)
+                                {
+                                    <span class="badge badge-pill badge-info">Full-Stack</span>
+
                                 }
                                 else
                                 {
-                                    @foreach (var EachMember in EachProject.DeveloperMembers)
-                                    {
-                                        <p class="card-text ">@EachMember.RoleType</p>
+                                    <span class="badge badge-pill badge-info">DT-Engineer</span>
+                                }:
+                                @if (EachOpening.ProficiencyLevelNeeded == 1)
+                                {
+                                    <span class="badge badge-pill badge-success">Beginner</span>
+                                }
+                                else if (EachOpening.ProficiencyLevelNeeded == 2)
+                                {
+                                    <span class="badge badge-pill badge-warning">Intermediate</span>
+                                }
+                                else if (EachOpening.ProficiencyLevelNeeded == 3)
+                                {
+                                    <span class="badge badge-pill badge-light">Advanced</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-pill badge-warning">Expert</span>
+                                }
+                            </p>
+                            <p>Current Members</p>
 
-                                    }
+
+
+                            @if (EachProject.DeveloperMembers is null)
+                            {
+                                <p class="card-text text-warning">No current members</p>
+                            }
+                            else
+                            {
+                                @foreach (var EachMember in EachProject.DeveloperMembers)
+                                {
+                                    <p class="card-text ">@EachMember.RoleType</p>
 
                                 }
-            }
-                    }
-                    
 
-                            
-            
-       
-    </div>
+                            }
+                        }
+                }
+
+
+
+
+
+                </div>
                 
 </div>
         }
