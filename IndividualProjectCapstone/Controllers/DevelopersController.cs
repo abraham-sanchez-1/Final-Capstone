@@ -41,7 +41,9 @@ namespace IndividualProjectCapstone.Controllers
             //    _developerViewModel.Add(_projectViewModel);
             //}
 
-            List<Project> projects = _context.Projects.ToList();
+            List<Project> projects = _context.Projects
+                .Include(l => l.Developer)
+                .ToList();
 
             foreach(Project project in projects)
             {
@@ -131,7 +133,7 @@ namespace IndividualProjectCapstone.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", developer.UserId);
-            return View(developer);
+            return RedirectToAction(nameof(Index));
         }
         // GET: Projects/Create
         public IActionResult CreateProject()
@@ -155,7 +157,7 @@ namespace IndividualProjectCapstone.Controllers
                 _project.DeveloperId = developer.Id;
                 _context.Projects.Add(_project);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProjectIndex));
             }
             return View(project);
         }
