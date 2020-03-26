@@ -207,8 +207,6 @@ namespace IndividualProjectCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateRole(RoleViewModel roleViewModel)
         {
-            if (ModelState.IsValid)
-            {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var viewOpening = roleViewModel.Opening;
                 Opening newOpening = new Opening();
@@ -217,9 +215,8 @@ namespace IndividualProjectCapstone.Controllers
                 newOpening.ProjectId = currentProjectId;
                 _context.Openings.Add(newOpening);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(roleViewModel);
+                return RedirectToAction(nameof(ProjectIndex));
+
         }
 
 
