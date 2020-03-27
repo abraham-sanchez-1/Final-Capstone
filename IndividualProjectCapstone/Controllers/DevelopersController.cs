@@ -101,8 +101,14 @@ namespace IndividualProjectCapstone.Controllers
     
         }
 
-        // GET: Developers/Details/5
+        // GET: Developers/ProfileIndex/5
         public async Task<IActionResult> ProfileIndex(int? id)
+        {
+            var developer = await _context.Developers.FirstOrDefaultAsync(m => m.Id == id);
+            return View(developer);
+        }
+
+        public async Task<IActionResult> PendingIndex(int? id)
         {
             var developer = await _context.Developers.FirstOrDefaultAsync(m => m.Id == id);
             return View(developer);
