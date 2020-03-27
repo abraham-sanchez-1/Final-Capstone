@@ -289,7 +289,12 @@ namespace IndividualProjectCapstone.Controllers
         {
             var _Project = await _context.Projects.FindAsync(id);
             var _Openings = await _context.Openings.Where(m => m.ProjectId == id).ToListAsync();
-            //var _PendingApplications = await _context.pe
+            var _OpeningIds = _Openings.Select(m => m.Id).ToList();
+            var _PendingApplications = await _context.PendingApplications.Where(m => _OpeningIds.Contains(m.Id)).ToListAsync();
+            var _ProjectMembers = await _context.ProjectMembers.Where(m => m.ProjectId == id).ToListAsync();
+            _context.PendingApplications.RemoveRange(_PendingApplications);
+            _context.ProjectMembers.RemoveRange(_ProjectMembers);
+            _context.Openings.RemoveRange(_Openings);
             _context.Projects.Remove(_Project);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ProjectIndex));

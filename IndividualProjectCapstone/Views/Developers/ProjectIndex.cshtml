@@ -14,7 +14,7 @@
 @* I will be going with a card design for this project *@
 <div class="container">
     <h2>Projects</h2>
-    @if (Model.AllProjects is null)
+    @if (Model.AllProjects == null)
     {
         <div class="jumbotron">
             <h1>Looks like you don't have any projects!</h1> 
@@ -31,6 +31,7 @@
                     <p class="card-text">@EachProject.Description</p>
                     <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
                     <a type="button" class="btn btn-warning btn-sm" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
+                    <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@EachProject.Id">Delete Project</a>
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
