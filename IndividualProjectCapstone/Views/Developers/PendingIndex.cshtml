@@ -87,7 +87,7 @@
         {
             <span class="badge badge-pill badge-warning">Expert</span>
         }
-        <a type="button" class="btn btn-success" asp-action="AcceptPendingApplication" asp-route-id="@EachApplication.Id, @Model.Opening.Id">Accept Application</a>
+        <a type="button" class="btn btn-success" asp-action="AcceptPendingApplication" asp-route-id="@EachApplication.Id">Accept Application</a>
         <a type="button" class="btn btn-danger" asp-action="DenyPendingApplication" asp-route-id="@EachApplication.Id">Deny Appilcation</a>
     </p>
         @if (Model.PendingApplications.Count() == 0)

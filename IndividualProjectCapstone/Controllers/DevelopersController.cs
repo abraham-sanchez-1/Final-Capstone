@@ -277,6 +277,24 @@ namespace IndividualProjectCapstone.Controllers
             return View(developer);
         }
 
+        //Accept Pending Application
+        public async Task<IActionResult> AcceptPendingApplication(int Id)
+        {
+            var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == Id);
+            var opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == pendingApplication.OpeningId);
+            var developer = await _context.Developers.FirstOrDefaultAsync(a => a.Id == pendingApplication.DeveloperId);
+            ProjectMember projectMember = new ProjectMember();
+            projectMember.DeveloperId = pendingApplication.DeveloperId;
+            projectMember.JoinDate = DateTime.Now;
+            projectMember.Email = pendingApplication.Email;
+            projectMember.RoleId = developer.RoleId;
+            projectMember.ProjectId = opening.ProjectId;
+            await _context.ProjectMembers.AddAsync(projectMember);
+            _context.PendingApplications.Remove(pendingApplication);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ProjectIndex));
+        }
+
         //Delete Pending Application
         public async Task<IActionResult> DenyPendingApplication (int Id)
         {
