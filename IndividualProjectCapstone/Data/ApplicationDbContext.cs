@@ -30,8 +30,6 @@ namespace IndividualProjectCapstone.Data
                     Name = "Other",
                     NormalizedName = "OTHER"
                 });
-            builder.Entity<ProjectMember>()
-                .HasNoKey();
            
         }
         public DbSet<Developer> Developers { get; set; }

@@ -281,7 +281,7 @@ namespace IndividualProjectCapstone.Controllers
         public async Task<IActionResult> AcceptPendingApplication(int Id)
         {
             var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == Id);
-            var opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == pendingApplication.OpeningId);
+            Opening opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == pendingApplication.OpeningId);
             var developer = await _context.Developers.FirstOrDefaultAsync(a => a.Id == pendingApplication.DeveloperId);
             ProjectMember projectMember = new ProjectMember();
             projectMember.DeveloperId = pendingApplication.DeveloperId;
@@ -289,6 +289,7 @@ namespace IndividualProjectCapstone.Controllers
             projectMember.Email = pendingApplication.Email;
             projectMember.RoleId = developer.RoleId;
             projectMember.ProjectId = opening.ProjectId;
+            opening.IsFilled = true;
             await _context.ProjectMembers.AddAsync(projectMember);
             _context.PendingApplications.Remove(pendingApplication);
             await _context.SaveChangesAsync();
