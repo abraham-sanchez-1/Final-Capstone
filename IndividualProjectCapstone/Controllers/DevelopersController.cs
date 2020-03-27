@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using IndividualProjectCapstone.Data;
 using IndividualProjectCapstone.Models;
 using System.Security.Claims;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace IndividualProjectCapstone.Controllers
 {
@@ -281,8 +283,13 @@ namespace IndividualProjectCapstone.Controllers
         public async Task<IActionResult> AcceptPendingApplication(int Id)
         {
             var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == Id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             Opening opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == pendingApplication.OpeningId);
             var developer = await _context.Developers.FirstOrDefaultAsync(a => a.Id == pendingApplication.DeveloperId);
+            var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == opening.ProjectId);
+            var projectName = _context.Projects.Where(m => m.Id == opening.ProjectId).Select(m => m.Name);
+
+            var currentUser = _context.Users.FirstOrDefault(m => m.Id == userId);
             ProjectMember projectMember = new ProjectMember();
             projectMember.DeveloperId = pendingApplication.DeveloperId;
             projectMember.JoinDate = DateTime.Now;
@@ -291,6 +298,26 @@ namespace IndividualProjectCapstone.Controllers
             projectMember.ProjectId = opening.ProjectId;
             opening.IsFilled = true;
             await _context.ProjectMembers.AddAsync(projectMember);
+
+
+            //SendGrid API
+            var apiKey = Environment.GetEnvironmentVariable(API_KEYS.SendGripAPI);
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(currentUser.Email);
+            var to = new EmailAddress(pendingApplication.Email, developer.UserName);
+            var subject = "Your application has been accepted for project: " + projectName;
+            var plainTextContent = "Here is your link to joing the githubt repository! Link: " + project.GithubUrl;
+            var htmlContent = "<strong>Get your CodeSquad on!!!</strong>";
+            var msg = MailHelper.CreateSingleEmail(
+                from,
+                to,
+                subject,
+                plainTextContent,
+                htmlContent
+             );
+
+            var response = await client.SendEmailAsync(msg);
+
             _context.PendingApplications.Remove(pendingApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ProjectIndex));
