@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Your Projects!</h1>
 
 <p>
     <a type="button" class="btn btn-outline-success" asp-action="CreateProject">Create A Project!</a>
@@ -13,11 +13,10 @@
 </p>
 @* I will be going with a card design for this project *@
 <div class="container">
-    <h2>Projects</h2>
-    @if (Model.AllProjects == null)
+    @if (Model.AllProjects.Count() == 0)
     {
         <div class="jumbotron">
-            <h1>Looks like you don't have any projects!</h1> 
+            <h1>Looks like you don't have any projects! Get started by selecting the create project above</h1> 
         </div>
     }
     
@@ -68,14 +67,16 @@
                                 }
                                 else
                                 {
-                                    <span class="badge badge-pill badge-warning">Expert</span>
+                                    <span class="badge badge-pill badge-danger">Expert</span>
                                 }
                             </p>
+                      }
+                     }
                             <p>Current Members</p>
 
 
 
-                            @if (EachProject.DeveloperMembers is null)
+                            @if (EachProject.DeveloperMembers.Count() == 0)
                             {
                                 <p class="card-text text-warning">No current members</p>
                             }
@@ -88,8 +89,8 @@
                                 }
 
                             }
-                        }
-                }
+                        
+                
 
 
 

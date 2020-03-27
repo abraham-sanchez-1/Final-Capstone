@@ -21,11 +21,11 @@
                 <div class="card-body text-center">
                     <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
                     <p class="card-text">@EachProject.Description</p>
-                    <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
+                    <p class="card-text">Project Owner: <a asp-action="ProfileIndex" asp-route-id="@EachProject.DeveloperId">@EachProject.Developer.UserName</a></p>
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
-                        {<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
+{<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
                     <p class="card-text">
                         @if (EachOpening.RoleId == 1)
                         {
@@ -58,15 +58,17 @@
                         }
                         else
                         {
-                            <span class="badge badge-pill badge-warning">Expert</span>
+                            <span class="badge badge-pill badge-danger">Expert</span>
                         }
                     </p>
                 </a>
+    }
+}
     <p>Current Members</p>
 
 
 
-    @if (EachProject.DeveloperMembers is null)
+    @if (EachProject.DeveloperMembers.Count == 0)
     {
         <p class="card-text text-warning">No current members</p>
     }
@@ -74,13 +76,15 @@
     {
         @foreach (var EachMember in EachProject.DeveloperMembers)
         {
-            <p class="card-text ">@EachMember.RoleType</p>
+                <span class="badge badge-pill badge-info">
+                    <a asp-action="ProfileIndex" asp-route-id="@EachMember.Id">@EachMember.UserName</a>
+                </span>
 
-        }
+                }
 
-    }
-    }
-    }
+            
+            
+                }
 
 </div>
             </div>

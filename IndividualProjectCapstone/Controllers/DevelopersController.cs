@@ -102,21 +102,9 @@ namespace IndividualProjectCapstone.Controllers
         }
 
         // GET: Developers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> ProfileIndex(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var developer = await _context.Developers
-                .Include(d => d.IdentityUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (developer == null)
-            {
-                return NotFound();
-            }
-
+            var developer = await _context.Developers.FirstOrDefaultAsync(m => m.Id == id);
             return View(developer);
         }
 
