@@ -96,7 +96,7 @@ namespace IndividualProjectCapstone.Controllers
         public async Task<IActionResult> RoleIndex(int? Id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var _opening = _context.Openings.Where(m => m.Id == Id).FirstOrDefault();
+            var _opening = await _context.Openings.Where(m => m.Id == Id).FirstOrDefaultAsync();
             PendingApplicationViewModel _pendingApplicationViewModel = new PendingApplicationViewModel();
             _pendingApplicationViewModel.Opening = _opening;
             return View(_pendingApplicationViewModel);
@@ -301,7 +301,7 @@ namespace IndividualProjectCapstone.Controllers
 
 
             //SendGrid API
-            var apiKey = API_KEYS.SendGripAPI;
+            var apiKey = API_KEYS.SendGridAPI;
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(currentUser.Email);
             var to = new EmailAddress(pendingApplication.Email, developer.UserName);

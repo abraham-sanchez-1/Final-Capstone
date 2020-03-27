@@ -7,11 +7,12 @@ namespace IndividualProjectCapstone
 {
      static public class API_KEYS
     {
-        public static string SendGripAPI
+        public static string SendGridAPI
         {
             get
             {
-                return "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";
+                return "";
+
             }
 
         }
