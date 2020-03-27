@@ -94,28 +94,11 @@ namespace IndividualProjectCapstone.Controllers
         public async Task<IActionResult> RoleIndex(int? Id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
-            if (developer is null)
-            {
-                return RedirectToAction("Create");
-            }
-            List<Project> projects = _context.Projects.Where(m => m.DeveloperId == developer.Id).ToList();
-
-            foreach (Project project in projects)
-            {
-                project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
-                var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
-                             .Select(p => p.DeveloperId)
-                             .ToList();
-                project.DeveloperMembers = _context.Developers
-                             .Where(m => developerIds.Contains(m.Id))
-                             .ToList();
-            }
-            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
-            _developerViewModel.CurrentUser = developer;
-            _developerViewModel.AllProjects = projects;
-            return View(_developerViewModel);
-            //List<Projects>
+            var _opening = _context.Openings.Where(m => m.Id == Id).FirstOrDefault();
+            PendingApplicationViewModel _pendingApplicationViewModel = new PendingApplicationViewModel();
+            _pendingApplicationViewModel.Opening = _opening;
+            return View(_pendingApplicationViewModel);
+    
         }
 
         // GET: Developers/Details/5
@@ -217,6 +200,27 @@ namespace IndividualProjectCapstone.Controllers
                 _context.Openings.Add(newOpening);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(ProjectIndex));
+
+        }
+
+        // POST: /Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePendingApplication(PendingApplicationViewModel pendingApplicationViewModel)
+        {
+           
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            var roleOpeningId = pendingApplicationViewModel.Opening.Id;
+            PendingApplication pendingApplication = new PendingApplication();
+            pendingApplication.OpeningId = roleOpeningId;
+            pendingApplication.DeveloperId = developer.Id;
+            pendingApplication.Email = pendingApplication.Email;
+            _context.PendingApplications.Add(pendingApplication);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
         }
 

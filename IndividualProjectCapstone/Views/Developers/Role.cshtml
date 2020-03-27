@@ -1,58 +1,83 @@
-﻿@model IndividualProjectCapstone.Models.RoleViewModel
+﻿@model IndividualProjectCapstone.Models.PendingApplicationViewModel
 
 @{
     ViewData["Title"] = "Role";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+
 
 <p>
-    <a type="button" class="btn btn-outline-success" asp-action="ProjectIndex">Take a look at your Projects!</a>
+    <a type="button" class="btn btn-outline-success" asp-action="ProjectIndex">Back To All Projects!</a>
 </p>
 @* I will be going with a card design for this project *@
-@*<div class="container">
-    <h2>Projects</h2>
-    <div class="card-columns">
-        @foreach (var EachProject in Model.)
+<div class="jumbotron-fluid">
+    <h1 class="display-3">Developer Opening</h1>
+    <p class="lead">Let's look at some of the details for this role!</p>
+    <hr class="my-4" />
+    <p class="lead">
+        Developer Type Needed:
+        @if (Model.Opening.RoleId == 1)
         {
-            <div class="card text-white bg-primary m-4" style="width: 25rem; height: 15rem;" >
-                <div class="card-header">@EachProject.Name</div>
-                <div class="card-body text-center">
-                    <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
-                    <p class="card-text">@EachProject.Description</p>
-                    <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
-                    @foreach (var EachOpening in EachProject.Openings)
-                    {@if (EachOpening.IsFilled == false)
-                        {
-                            <p class="card-text">@EachOpening.RoleType: @EachOpening.ProficiencyLevelNeeded</p>
-                        }
-
-                }
-                    @if (EachProject.DeveloperMembers is null)
-                    {
-                        <p class="card-text text-warning">No current members</p>
-                    }
-                    else
-                    {
-                        @foreach (var EachMember in EachProject.DeveloperMembers)
-                        {
-                            <p class="card-text ">@EachMember.UserName: @EachMember.RoleType</p>
-
-                        }
-                    }
-
-                </div>
-            </div>
+            <span class="badge badge-pill badge-info">Front-end</span>
         }
-    </div>
-</div>*@
+        else if (Model.Opening.RoleId == 2)
+        {
+            <span class="badge badge-pill badge-info">Back-end</span>
+        }
+        else if (Model.Opening.RoleId == 3)
+        {
+            <span class="badge badge-pill badge-info">Full-Stack</span>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-info">DT-Engineer</span>
+        }| Proficiency Level needed:
+        @if (Model.Opening.ProficiencyLevelNeeded == 1)
+        {
+            <span class="badge badge-pill badge-success">Beginner</span>
+        }
+        else if (Model.Opening.ProficiencyLevelNeeded == 2)
+        {
+            <span class="badge badge-pill badge-warning">Intermediate</span>
+        }
+        else if (Model.Opening.ProficiencyLevelNeeded == 3)
+        {
+            <span class="badge badge-pill badge-light">Advanced</span>
+        }
+        else
+        {
+            <span class="badge badge-pill badge-warning">Expert</span>
+        }
+
+    </p>
+    <p class="lead">Example User Story: @Model.Opening.ExampleUserStory</p>
+    <hr class="my-4" />
+    <form asp-action="CreatePendingApplication">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+
+            <input type="hidden" asp-for="Opening.Id" class="form-control" />
+            <span asp-validation-for="Opening.Id" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Please enter an email, if owner accepts<br /> 
+            the invitation you will receive a notification to join the github repository!</label>
+            <input asp-for="PendingApplication.Email" class="form-control" />
+            <span asp-validation-for="PendingApplication.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Send Application!" class="btn btn-outline-success" />
+        </div>
+    </form>
+</div>
 
 
 
 
 
-    @*OLD MATERIAL - TO BE REPLACED
+
+@*OLD MATERIAL - TO BE REPLACED
         <table class="table">
         <thead>
             <tr>
