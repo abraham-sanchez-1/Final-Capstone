@@ -1,7 +1,7 @@
-﻿@model IndividualProjectCapstone.Models.DeveloperViewModel
+﻿@model IndividualProjectCapstone.Models.RoleViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Role";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,10 +11,10 @@
     <a type="button" class="btn btn-outline-success" asp-action="ProjectIndex">Take a look at your Projects!</a>
 </p>
 @* I will be going with a card design for this project *@
-<div class="container">
+@*<div class="container">
     <h2>Projects</h2>
     <div class="card-columns">
-        @foreach (var EachProject in Model.AllProjects)
+        @foreach (var EachProject in Model.)
         {
             <div class="card text-white bg-primary m-4" style="width: 25rem; height: 15rem;" >
                 <div class="card-header">@EachProject.Name</div>
@@ -46,7 +46,7 @@
             </div>
         }
     </div>
-</div>
+</div>*@
 
 
 

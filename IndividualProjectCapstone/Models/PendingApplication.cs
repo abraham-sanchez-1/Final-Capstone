@@ -17,6 +17,7 @@ namespace IndividualProjectCapstone.Models
         [ForeignKey("Opening")]
         public int OpeningId { get; set; }
         public Opening Opening { get; set; }
+        public string Email { get; set; }
 
     }
 }

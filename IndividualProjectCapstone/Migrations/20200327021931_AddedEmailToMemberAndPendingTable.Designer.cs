@@ -4,14 +4,16 @@ using IndividualProjectCapstone.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IndividualProjectCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200327021931_AddedEmailToMemberAndPendingTable")]
+    partial class AddedEmailToMemberAndPendingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,6 +158,7 @@ namespace IndividualProjectCapstone.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondaryTechnology")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
@@ -262,15 +265,15 @@ namespace IndividualProjectCapstone.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "df3e39e8-f9a6-4baa-814e-f8614042b11a",
-                            ConcurrencyStamp = "d32d918a-9aff-49d8-bf0a-5a8917220a90",
+                            Id = "d13cee06-bb01-43e9-aeab-03fb8a35b970",
+                            ConcurrencyStamp = "76175191-8229-420d-be2f-b60ce5fc3b35",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "d371e0c1-b78f-4347-8259-6ac578a5fbec",
-                            ConcurrencyStamp = "6b4b8659-6299-4421-b7e2-46d9965ce4db",
+                            Id = "17b9b1c2-037d-4c17-a16e-fcff5f23f64d",
+                            ConcurrencyStamp = "4bc728a2-e2bf-4d11-b564-f78c52bdb6ca",
                             Name = "Other",
                             NormalizedName = "OTHER"
                         });

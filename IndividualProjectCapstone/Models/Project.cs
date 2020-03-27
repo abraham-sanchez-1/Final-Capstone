@@ -27,7 +27,10 @@ namespace IndividualProjectCapstone.Models
         [Required]
         [Display(Name = "Primary Technology")]
         public string PrimaryTechnology { get; set; }
+        [Required]
+        [Display(Name = "Secondary Technology")]
         public string SecondaryTechnology { get; set; }
+        [Required]
         public string GithubUrl { get; set; }
         public bool IsComplete { get; set; }
         [ForeignKey("Developer")]

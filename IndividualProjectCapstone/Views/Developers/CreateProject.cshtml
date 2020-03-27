@@ -19,6 +19,12 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <p class="text-warning">Please take time now to create a repositoty!</p>
+                <label class="control-label">Give this project a name!</label>
+                <input asp-for="GithubUrl" class="form-control" />
+                <span asp-validation-for="GithubUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">What will be the primary technology for this project?</label>
                 <input asp-for="PrimaryTechnology" class="form-control" />
                 <span asp-validation-for="PrimaryTechnology" class="text-danger"></span>
