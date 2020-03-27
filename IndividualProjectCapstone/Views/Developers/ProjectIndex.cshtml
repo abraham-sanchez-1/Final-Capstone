@@ -70,28 +70,62 @@
                                     <span class="badge badge-pill badge-danger">Expert</span>
                                 }
                                 <a type="button" class="btn btn-secondary btn-sm text-black-50" asp-action="PendingIndex" asp-route-id="@EachOpening.Id">Pending Applicants!</a>
-                     </p>
-                      }
-                     }
-                            <p>Current Members</p>
+                            </p>
+                        }
+                }
+                    <p>Current Members</p>
 
 
 
-                            @if (EachProject.DeveloperMembers.Count() == 0)
+                    @if (EachProject.DeveloperMembers.Count() == 0)
+                    {
+                        <p class="card-text text-warning">No current members</p>
+                    }
+                    else
+                    {
+                        @foreach (var EachMember in EachProject.DeveloperMembers)
+                        {
+                            <span class="badge badge-pill badge-info">
+                                <a asp-action="ProfileIndex" asp-route-id="@EachMember.Id">@EachMember.UserName</a>
+                            </span>
+                            @if (EachMember.RoleId == 1)
                             {
-                                <p class="card-text text-warning">No current members</p>
+                                <span class="badge badge-pill badge-info">Front-end</span>
+                            }
+                            else if (EachMember.RoleId == 2)
+                            {
+                                <span class="badge badge-pill badge-info">Back-end</span>
+                            }
+                            else if (EachMember.RoleId == 3)
+                            {
+                                <span class="badge badge-pill badge-info">Full-Stack</span>
+
                             }
                             else
                             {
-                                @foreach (var EachMember in EachProject.DeveloperMembers)
-                                {
-                                    <p class="card-text ">@EachMember.RoleType</p>
-
-                                }
-
+                                <span class="badge badge-pill badge-info">DT-Engineer</span>
                             }
-                        
-                
+                            @if (EachMember.ProficiencyLevel == 1)
+                            {
+                                <span class="badge badge-pill badge-success">Beginner</span>
+                            }
+                            else if (EachMember.ProficiencyLevel == 2)
+                            {
+                                <span class="badge badge-pill badge-warning">Intermediate</span>
+                            }
+                            else if (EachMember.ProficiencyLevel == 3)
+                            {
+                                <span class="badge badge-pill badge-light">Advanced</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-pill badge-danger">Expert</span>
+                            }
+                        }
+
+                    }
+
+
 
 
 
