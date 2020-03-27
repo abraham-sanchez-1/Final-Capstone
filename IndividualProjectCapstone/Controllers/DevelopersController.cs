@@ -218,7 +218,7 @@ namespace IndividualProjectCapstone.Controllers
             PendingApplication pendingApplication = new PendingApplication();
             pendingApplication.OpeningId = roleOpeningId;
             pendingApplication.DeveloperId = developer.Id;
-            pendingApplication.Email = pendingApplication.Email;
+            pendingApplication.Email = pendingApplicationViewModel.PendingApplication.Email;
             _context.PendingApplications.Add(pendingApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -301,7 +301,7 @@ namespace IndividualProjectCapstone.Controllers
 
 
             //SendGrid API
-            var apiKey = Environment.GetEnvironmentVariable(API_KEYS.SendGripAPI);
+            var apiKey = API_KEYS.SendGripAPI;
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress(currentUser.Email);
             var to = new EmailAddress(pendingApplication.Email, developer.UserName);

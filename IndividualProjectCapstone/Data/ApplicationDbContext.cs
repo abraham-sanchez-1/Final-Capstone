@@ -39,6 +39,5 @@ namespace IndividualProjectCapstone.Data
         public DbSet<RoleType> RoleTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<PendingApplication> PendingApplications { get; set; }
-
     }
 }
