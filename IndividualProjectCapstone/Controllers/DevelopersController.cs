@@ -277,10 +277,10 @@ namespace IndividualProjectCapstone.Controllers
             return View(developer);
         }
 
-        //Delete
-        public async Task<IActionResult> DenyPendingApplication (int PendingId)
+        //Delete Pending Application
+        public async Task<IActionResult> DenyPendingApplication (int Id)
         {
-            var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == PendingId);
+            var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == Id);
             _context.PendingApplications.Remove(pendingApplication);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ProjectIndex));
