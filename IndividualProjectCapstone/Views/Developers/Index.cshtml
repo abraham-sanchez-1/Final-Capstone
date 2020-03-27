@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
 <p>
     <a type="button" class="btn btn-outline-success" asp-action="ProjectIndex">Take a look at your Projects!</a>
 </p>
 @* I will be going with a card design for this project *@
 <div class="container">
-    <h2>Projects</h2>
+    <h1>Available Projects</h1>
     <div class="card-columns">
         @foreach (var EachProject in Model.AllProjects)
         {
