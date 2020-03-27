@@ -1,47 +1,85 @@
-﻿@model IndividualProjectCapstone.Models.PendingApplicationViewModel
+﻿@model IndividualProjectCapstone.Models.PendingApplicationsViewModel
 
 @{
-    ViewData["Title"] = "RoleIndex";
+    ViewData["Title"] = "PendingIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
 <p>
-    <a type="button" class="btn btn-outline-success" asp-action="Index">Back To All Projects!</a>
+    <a type="button" class="btn btn-outline-success" asp-action="ProjectIndex">Back To Your Projects!</a>
 </p>
 @* I will be going with a card design for this project *@
 <div class="jumbotron-fluid">
-    <h1 class="display-3">Developer Opening</h1>
-    <p class="lead">Let's look at some of the details for this role!</p>
+    @if (Model.Opening.RoleId == 1)
+    {
+        <h1 class="display-4">Pending Applications for Front End Role</h1>
+    }
+    else if (Model.Opening.RoleId == 2)
+    {
+        <h1 class="display-4">Pending Applications for Back End Role</h1>
+    }
+    else if (Model.Opening.RoleId == 3)
+    {
+        <h1 class="display-4">Pending Applications for Full Stack Role</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Pending Applications for Database Engineer</h1>
+    }
+    @if (Model.Opening.ProficiencyLevelNeeded == 1)
+    {
+        <h3 class="display-4">Skill Level: Beginner</h3>
+    }
+    else if (Model.Opening.RoleId == 2)
+    {
+        <h3 class="display-4">Skill Level: Intermediate</h3>
+    }
+    else if (Model.Opening.RoleId == 3)
+    {
+        <h3 class="display-4">Skill Level: Adavanced</h3>
+    }
+    else
+    {
+        <h3 class="display-4">Skill Level: Expert</h3>
+    }
+
+    <p class="lead">Role example user story: <br />@Model.Opening.ExampleUserStory</p>
     <hr class="my-4" />
     <p class="lead">
-        Developer Type Needed:
-        @if (Model.Opening.RoleId == 1)
+        Developer Applications:
+        @foreach (var EachApplication in Model.PendingApplications)
+        {
+    <p class="lead">
+        Username: @EachApplication.Developer.UserName<br />
+        About User: @EachApplication.Developer.AboutUser<br />
+        Developer Type:
+        @if (EachApplication.Developer.RoleId == 1)
         {
             <span class="badge badge-pill badge-info">Front-end</span>
         }
-        else if (Model.Opening.RoleId == 2)
+        else if (EachApplication.Developer.RoleId == 2)
         {
             <span class="badge badge-pill badge-info">Back-end</span>
         }
-        else if (Model.Opening.RoleId == 3)
+        else if (EachApplication.Developer.RoleId == 3)
         {
             <span class="badge badge-pill badge-info">Full-Stack</span>
         }
         else
         {
             <span class="badge badge-pill badge-info">DT-Engineer</span>
-        }| Proficiency Level needed:
-        @if (Model.Opening.ProficiencyLevelNeeded == 1)
+        }| Proficiency Level:
+        @if (EachApplication.Developer.ProficiencyLevel == 1)
         {
             <span class="badge badge-pill badge-success">Beginner</span>
         }
-        else if (Model.Opening.ProficiencyLevelNeeded == 2)
+        else if (EachApplication.Developer.ProficiencyLevel == 2)
         {
             <span class="badge badge-pill badge-warning">Intermediate</span>
         }
-        else if (Model.Opening.ProficiencyLevelNeeded == 3)
+        else if (EachApplication.Developer.ProficiencyLevel == 3)
         {
             <span class="badge badge-pill badge-light">Advanced</span>
         }
@@ -49,88 +87,19 @@
         {
             <span class="badge badge-pill badge-warning">Expert</span>
         }
-
+        <a type="button" class="btn btn-success" asp-action="AcceptPendingApplication" asp-route-id="@EachApplication.Id, @Model.Opening.Id">Accept Application</a>
+        <a type="button" class="btn btn-danger" asp-action="DenyPendingApplication" asp-route-id="@EachApplication.Id">Deny Appilcation</a>
     </p>
-    <p class="lead">Example User Story: @Model.Opening.ExampleUserStory</p>
-    <hr class="my-4" />
-    <form asp-action="CreatePendingApplication">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
+        @if (Model.PendingApplications.Count() == 0)
+        {
+            <h3 class="text-danger btn-outline-danger">No Current Applications!</h3>
+        }
+        <br />
+    }
 
-            <input type="hidden" asp-for="Opening.Id" class="form-control" />
-            <span asp-validation-for="Opening.Id" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Please enter an email, if owner accepts<br /> 
-            the invitation you will receive a notification to join the github repository!</label>
-            <input asp-for="PendingApplication.Email" class="form-control" />
-            <span asp-validation-for="PendingApplication.Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Send Application!" class="btn btn-outline-success" />
-        </div>
-    </form>
 </div>
 
 
 
 
 
-
-@*OLD MATERIAL - TO BE REPLACED
-        <table class="table">
-        <thead>
-            <tr>
-
-                <th>
-                    Project
-                </th>
-                <th>
-                    Owner
-                </th>
-                <th>
-                    Roles Needed
-                </th>
-                <th>
-                        @Html.DisplayNameFor(model => model.DeveloperType)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProficiencyLevel)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AboutUser)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DeveloperType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProficiencyLevel)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AboutUser)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-            }
-        </tbody>
-    </table>*@

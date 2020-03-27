@@ -110,9 +110,14 @@ namespace IndividualProjectCapstone.Controllers
 
         public async Task<IActionResult> PendingIndex(int? id)
         {
-            var developer = await _context.Developers.FirstOrDefaultAsync(m => m.Id == id);
-            return View(developer);
+            var opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == id);
+            var pendingApplications = await _context.PendingApplications.Where(m => m.OpeningId == id).Include(l => l.Developer).ToListAsync();
+            PendingApplicationsViewModel pendingApplicationsView = new PendingApplicationsViewModel();
+            pendingApplicationsView.Opening = opening;
+            pendingApplicationsView.PendingApplications = pendingApplications;
+            return View(pendingApplicationsView);
         }
+
 
         // GET: Developers/Create
         public IActionResult Create()
@@ -270,6 +275,15 @@ namespace IndividualProjectCapstone.Controllers
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", developer.UserId);
             return View(developer);
+        }
+
+        //Delete
+        public async Task<IActionResult> DenyPendingApplication (int PendingId)
+        {
+            var pendingApplication = await _context.PendingApplications.FirstOrDefaultAsync(m => m.Id == PendingId);
+            _context.PendingApplications.Remove(pendingApplication);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ProjectIndex));
         }
 
         // GET: Developers/Delete/5

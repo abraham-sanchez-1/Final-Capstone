@@ -19,5 +19,6 @@ namespace IndividualProjectCapstone.Models
         public Opening Opening { get; set; }
         public string Email { get; set; }
 
+
     }
 }
