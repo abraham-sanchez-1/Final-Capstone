@@ -215,6 +215,16 @@ namespace IndividualProjectCapstone.Controllers
             return View(roleViewModel);
         }
 
+        // Mark project Complete
+        public async Task<IActionResult> MarkComplete (int Id)
+        {
+            var projectId = Id;
+            var _project = _context.Projects.FirstOrDefault(m => m.Id == projectId);
+            _project.IsComplete = true;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ProjectIndex));
+        }
+
         // POST: Developers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

@@ -7,6 +7,7 @@
 
 
 @* Row layout, left are active projects, right is completed project with option to leave reviews *@
+<br />
     <div class="row">
         <div class="container col-5">
             <h2>Active Projects</h2>
@@ -16,6 +17,9 @@
                     <h3 class="text-info">Looks like you don't have any active projects! Go back to the main page and start applying!</h3>
                 </div>
             }
+            else
+            {
+
 
             <table class="table">
                 <thead>
@@ -54,6 +58,7 @@
                     }
                 </tbody>
             </table>
+            }
         </div>
         @* Table containing completed projects *@
     <div class="container col-5">
@@ -64,6 +69,9 @@
                 <h3 class="text-info">No Completed Projects</h3>
             </div>
         }
+        else
+        {
+
 
         <table class="table">
             <thead>
@@ -102,6 +110,7 @@
                 }
             </tbody>
         </table>
+        }
     </div>
         
     </div>
