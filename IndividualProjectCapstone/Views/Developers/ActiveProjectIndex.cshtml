@@ -5,18 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Your Projects!</h1>
+<h1>Active Projects!</h1>
 
 <p>
-    <br />
     <a type="button" class="btn btn-outline-success" asp-action="CreateProject">Create A Project!</a>
+    <a type="button" class="btn btn-outline-success" asp-action="Index">Go back to all projects!</a>
 </p>
 @* I will be going with a card design for this project *@
 <div class="container">
     @if (Model.AllProjects.Count() == 0)
     {
         <div class="jumbotron">
-            <h1>Looks like you don't have any projects! Get started by selecting the create project above</h1> 
+            <h1>Looks like you don't have any active projects! Go back to the main page and start applying!</h1> 
         </div>
     }
     
