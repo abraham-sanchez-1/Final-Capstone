@@ -125,7 +125,12 @@ namespace IndividualProjectCapstone.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
             var projectIds = _context.ProjectMembers.Where(m => m.DeveloperId == developer.Id).Select(m => m.ProjectId).ToList();
-            var allProjects = _context.Projects.Where(m => projectIds.Contains(m.Id)).ToList();
+            var allProjects = _context.Projects
+                .Include(l => l.Developer)
+                .ToList()
+                .Where(m => projectIds
+                .Contains(m.Id))
+                .ToList();
             foreach (Project project in allProjects)
             {
                 project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();

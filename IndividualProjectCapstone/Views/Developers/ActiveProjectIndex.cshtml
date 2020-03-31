@@ -1,141 +1,108 @@
-﻿@model IndividualProjectCapstone.Models.DeveloperViewModel
+﻿@model IndividualProjectCapstone.Models.ActiveProjectViewModel
 
 @{
-    ViewData["Title"] = "OwnProjects";
+    ViewData["Title"] = "ActiveProjectIndex";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Active Projects!</h1>
 
-<p>
-    <a type="button" class="btn btn-outline-success" asp-action="CreateProject">Create A Project!</a>
-    <a type="button" class="btn btn-outline-success" asp-action="Index">Go back to all projects!</a>
-</p>
-@* I will be going with a card design for this project *@
-<div class="container">
-    @if (Model.AllProjects.Count() == 0)
-    {
-        <div class="jumbotron">
-            <h1>Looks like you don't have any active projects! Go back to the main page and start applying!</h1> 
-        </div>
-    }
-    
-    <div class="card-columns">
-        @foreach (var EachProject in Model.AllProjects)
-        {
-            <div class="card text-white bg-primary m-4" style="width: 25rem; height: 30rem;" >
-                <div class="card-header">@EachProject.Name</div>
-                <div class="card-body text-center">
-                    <span class="badge badge-pill badge-light">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-light">@EachProject.SecondaryTechnology</span>
-                    <p class="card-text">@EachProject.Description</p>
-                    <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
-                    <a type="button" class="btn btn-warning btn-sm" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
-                    <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@EachProject.Id">Delete Project</a>
-                    <p>Open Roles</p>
-                    @foreach (var EachOpening in EachProject.Openings)
-                    {@if (EachOpening.IsFilled == false)
-                        {
-                            <p class="card-text">
-                                @if (EachOpening.RoleId == 1)
-                                {
-                                    <span class="badge badge-pill badge-info">Front-end</span>
-                                }
-                                else if (EachOpening.RoleId == 2)
-                                {
-                                    <span class="badge badge-pill badge-info">Back-end</span>
-                                }
-                                else if (EachOpening.RoleId == 3)
-                                {
-                                    <span class="badge badge-pill badge-info">Full-Stack</span>
-
-                                }
-                                else
-                                {
-                                    <span class="badge badge-pill badge-info">DT-Engineer</span>
-                                }:
-                                @if (EachOpening.ProficiencyLevelNeeded == 1)
-                                {
-                                    <span class="badge badge-pill badge-success">Beginner</span>
-                                }
-                                else if (EachOpening.ProficiencyLevelNeeded == 2)
-                                {
-                                    <span class="badge badge-pill badge-warning">Intermediate</span>
-                                }
-                                else if (EachOpening.ProficiencyLevelNeeded == 3)
-                                {
-                                    <span class="badge badge-pill badge-light">Advanced</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-pill badge-danger">Expert</span>
-                                }
-                                <a type="button" class="btn btn-secondary btn-sm text-black-50" asp-action="PendingIndex" asp-route-id="@EachOpening.Id">Pending Applicants!</a>
-                            </p>
-                        }
-                }
-                    <p>Current Members</p>
-
-
-
-                    @if (EachProject.DeveloperMembers.Count() == 0)
-                    {
-                        <p class="card-text text-warning">No current members</p>
-                    }
-                    else
-                    {
-                        @foreach (var EachMember in EachProject.DeveloperMembers)
-                        {
-                            <span class="badge badge-pill badge-info">
-                                <a asp-action="ProfileIndex" asp-route-id="@EachMember.Id">@EachMember.UserName</a>
-                            </span>
-                            @if (EachMember.RoleId == 1)
-                            {
-                                <span class="badge badge-pill badge-info">Front-end</span>
-                            }
-                            else if (EachMember.RoleId == 2)
-                            {
-                                <span class="badge badge-pill badge-info">Back-end</span>
-                            }
-                            else if (EachMember.RoleId == 3)
-                            {
-                                <span class="badge badge-pill badge-info">Full-Stack</span>
-
-                            }
-                            else
-                            {
-                                <span class="badge badge-pill badge-info">DT-Engineer</span>
-                            }
-                            @if (EachMember.ProficiencyLevel == 1)
-                            {
-                                <span class="badge badge-pill badge-success">Beginner</span>
-                            }
-                            else if (EachMember.ProficiencyLevel == 2)
-                            {
-                                <span class="badge badge-pill badge-warning">Intermediate</span>
-                            }
-                            else if (EachMember.ProficiencyLevel == 3)
-                            {
-                                <span class="badge badge-pill badge-light">Advanced</span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-pill badge-danger">Expert</span>
-                            }
-                        }
-
-                    }
-
-
-
-
-
-
-
+@* Row layout, left are active projects, right is completed project with option to leave reviews *@
+    <div class="row">
+        <div class="container col-5">
+            <h2>Active Projects</h2>
+            @if (Model.ActiveProjects.Count() == 0)
+            {
+                <div class="jumbotron">
+                    <h3 class="text-info">Looks like you don't have any active projects! Go back to the main page and start applying!</h3>
                 </div>
-                
-</div>
-        }
-        </div>
-    </div>
+            }
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Project Name
+                        </th>
+                        <th>
+                            Project Lead
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+                            <input class="form-inline form-control" id="myInput" type="text" placeholder="Filter">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="myTable">
+                    @foreach (var item in Model.ActiveProjects)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Developer.UserName)
+                            </td>
+                            <td>
+                                <a type="button" class="btn btn-success" asp-action="ProjectDetails" asp-route-id="@item.Id">Project Details</a>
+                            </td>
+                            <td>
+                                <a type="button" class="btn btn-danger" asp-action="LeaveProject" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @* Table containing completed projects *@
+    <div class="container col-5">
+        <h2>Completed Projects</h2>
+        @if (Model.CompletedProjects.Count() == 0)
+        {
+            <div class="jumbotron">
+                <h3 class="text-info">No Completed Projects</h3>
+            </div>
+        }
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Project Name
+                    </th>
+                    <th>
+                        Project Lead
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+                        <input class="form-inline form-control" id="myInput" type="text" placeholder="Filter">
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                @foreach (var item in Model.CompletedProjects)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Developer.UserName)
+                        </td>
+                        <td>
+                            <a type="button" class="btn btn-success" asp-action="ProjectDetails" asp-route-id="@item.Id">Project Details</a>
+                        </td>
+                        <td>
+                            <a type="button" class="btn btn-danger" asp-action="CreateReviews" asp-route-id="@item.Id">Create Reviews</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+        
+    </div>
 
