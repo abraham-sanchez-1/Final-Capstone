@@ -125,8 +125,8 @@ namespace IndividualProjectCapstone.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
             var projectIds = _context.ProjectMembers.Where(m => m.DeveloperId == developer.Id).Select(m => m.ProjectId).ToList();
-            var activeProjects = _context.Projects.Where(m => projectIds.Contains(m.Id)).ToList();
-            foreach (Project project in activeProjects)
+            var allProjects = _context.Projects.Where(m => projectIds.Contains(m.Id)).ToList();
+            foreach (Project project in allProjects)
             {
                 project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
                 var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
@@ -136,11 +136,13 @@ namespace IndividualProjectCapstone.Controllers
                              .Where(m => developerIds.Contains(m.Id))
                              .ToList();
             }
-
-            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
-            _developerViewModel.CurrentUser = developer;
-            _developerViewModel.AllProjects = activeProjects;
-            return View(_developerViewModel);
+            var activeProjects = allProjects.Where(m => m.IsComplete == false).ToList();
+            var completedProjects = allProjects.Where(m => m.IsComplete == true).ToList();
+            ActiveProjectViewModel _activeProjectViewModel = new ActiveProjectViewModel();
+            _activeProjectViewModel.CurrentUser = developer;
+            _activeProjectViewModel.ActiveProjects = activeProjects;
+            _activeProjectViewModel.CompletedProjects = completedProjects;
+            return View(_activeProjectViewModel);
         }
 
 
