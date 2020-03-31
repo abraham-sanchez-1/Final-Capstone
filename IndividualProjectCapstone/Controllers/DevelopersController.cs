@@ -120,6 +120,29 @@ namespace IndividualProjectCapstone.Controllers
             return View(pendingApplicationsView);
         }
 
+        public async Task<IActionResult> ActiveProjectIndex()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            var projectIds = _context.ProjectMembers.Where(m => m.DeveloperId == developer.Id).Select(m => m.ProjectId).ToList();
+            var activeProjects = _context.Projects.Where(m => projectIds.Contains(m.Id)).ToList();
+            foreach (Project project in activeProjects)
+            {
+                project.Openings = _context.Openings.Where(o => o.ProjectId == project.Id).ToList();
+                var developerIds = _context.ProjectMembers.Where(p => p.ProjectId == project.Id)
+                             .Select(p => p.DeveloperId)
+                             .ToList();
+                project.DeveloperMembers = _context.Developers
+                             .Where(m => developerIds.Contains(m.Id))
+                             .ToList();
+            }
+
+            DeveloperViewModel _developerViewModel = new DeveloperViewModel();
+            _developerViewModel.CurrentUser = developer;
+            _developerViewModel.AllProjects = activeProjects;
+            return View(_developerViewModel);
+        }
+
 
         // GET: Developers/Create
         public IActionResult Create()
