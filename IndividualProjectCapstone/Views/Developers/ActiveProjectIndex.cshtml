@@ -104,7 +104,19 @@
                             <a type="button" class="btn btn-success" asp-action="ProjectDetails" asp-route-id="@item.Id">Project Details</a>
                         </td>
                         <td>
-                            <a type="button" class="btn btn-danger" asp-action="CreateReviews" asp-route-id="@item.Id">Create Reviews</a>
+                            @* Location of drop down button *@
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <button type="button" class="btn btn-primary">Reviews</button>
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                        @foreach (var eachMember in item.DeveloperMembers)
+                                        {
+                                            <a class="dropdown-item" asp-action="CreateReview" asp-route-id="@eachMember.Id">@eachMember.UserName</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 }

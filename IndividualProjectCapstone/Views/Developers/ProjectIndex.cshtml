@@ -37,8 +37,8 @@
                     }
                     else
                     {
-                    <a href="#" type ="button" class="btn btn-warning disabled">Completed</a>
-                      }
+                        <a href="#" type="button" class="btn btn-warning disabled">Completed</a>
+                    }
 
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
@@ -129,6 +129,10 @@
                             else
                             {
                                 <span class="badge badge-pill badge-danger">Expert</span>
+                            }
+                            @if (EachProject.IsComplete == true)
+                            {
+                                <a type="button" class="btn btn-warning" asp-action="CreateReview" asp-route-id="@EachMember.Id">Create Review</a>
                             }
                         }
 
