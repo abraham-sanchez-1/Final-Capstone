@@ -7,13 +7,13 @@
 
 
 @* I will be going with a card design for this project *@
-<div class="container">
+
     <br />
     <h1>Available Projects</h1>
-    <div class="card-columns">
+    <div class="card-deck" style="width: 100%">
         @foreach (var EachProject in Model.AllProjects)
         {
-            <div class="card text-white bg-primary m-4" style="width: 25rem; height: 30rem;" >
+            <div class="card text-white bg-primary m-2 p-2" style="min-width: 20rem; min-height: 30rem;" >
                 <div class="card-header">@EachProject.Name</div>
                 <div class="card-body text-center">
                     <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
@@ -22,7 +22,7 @@
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
-{<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
+                        {<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
                     <p class="card-text">
                         @if (EachOpening.RoleId == 1)
                         {
@@ -87,7 +87,7 @@
             </div>
         }
     </div>
-</div>
+
 
 
 
