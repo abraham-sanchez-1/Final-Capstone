@@ -1,4 +1,4 @@
-﻿@model IndividualProjectCapstone.Models.Developer
+﻿@model IndividualProjectCapstone.Models.DeveloperReviewViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,21 +7,21 @@
 
 
     <div class="jumbotron">
-        <h1 class="display-3">@Model.UserName's Profile</h1>
-        <img src="@Model.UrlPicture" class="mx-auto d-block" style="width:300px;height:300px;"/>
-        <p class="lead">About this user!<br />@Model.AboutUser</p>
+        <h1 class="display-3">@Model.Developer.UserName's Profile</h1>
+        <img src="@Model.Developer.UrlPicture" class="mx-auto d-block" style="width:300px;height:300px;"/>
+        <p class="lead">About this user!<br />@Model.Developer.AboutUser</p>
         <hr class="my-4">
         <p class="lead">
             Developer Type:
-            @if (Model.RoleId == 1)
+            @if (Model.Developer.RoleId == 1)
             {
                 <span class="badge badge-pill badge-info">Front-end</span>
             }
-            else if (Model.RoleId == 2)
+            else if (Model.Developer.RoleId == 2)
             {
                 <span class="badge badge-pill badge-info">Back-end</span>
             }
-            else if (Model.RoleId == 3)
+            else if (Model.Developer.RoleId == 3)
             {
                 <span class="badge badge-pill badge-info">Full-Stack</span>
             }
@@ -29,15 +29,15 @@
             {
                 <span class="badge badge-pill badge-info">DT-Engineer</span>
             }| Proficiency Level:
-            @if (Model.ProficiencyLevel == 1)
+            @if (Model.Developer.ProficiencyLevel == 1)
             {
                 <span class="badge badge-pill badge-success">Beginner</span>
             }
-            else if (Model.ProficiencyLevel == 2)
+            else if (Model.Developer.ProficiencyLevel == 2)
             {
                 <span class="badge badge-pill badge-warning">Intermediate</span>
             }
-            else if (Model.ProficiencyLevel == 3)
+            else if (Model.Developer.ProficiencyLevel == 3)
             {
                 <span class="badge badge-pill badge-light">Advanced</span>
             }
@@ -48,6 +48,6 @@
         </p>
     </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Developer.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -113,12 +113,22 @@ namespace IndividualProjectCapstone.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
-                return View(developer);
+                DeveloperReviewViewModel viewModel = new DeveloperReviewViewModel();
+                viewModel.Developer = developer;
+                viewModel.Reviews = _context.Reviews
+                    .Where(m => m.DeveloperId == developer.Id)
+                    .ToList();
+                return View(viewModel);
             }
             else
             {
                 var developer = await _context.Developers.FirstOrDefaultAsync(m => m.Id == id);
-                return View(developer);
+                DeveloperReviewViewModel viewModel = new DeveloperReviewViewModel();
+                viewModel.Developer = developer;
+                viewModel.Reviews = _context.Reviews
+                    .Where(m => m.DeveloperId == developer.Id)
+                    .ToList();
+                return View(viewModel);
             }
         }
             
