@@ -45,7 +45,10 @@ namespace IndividualProjectCapstone.Controllers
 
             List<Project> projects = _context.Projects
                 .Include(l => l.Developer)
-                .ToList();
+                .ToList()
+                .Where(m => m.IsComplete == false)
+                .ToList()
+                ;
 
             foreach(Project project in projects)
             {

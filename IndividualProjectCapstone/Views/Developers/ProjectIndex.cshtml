@@ -29,8 +29,17 @@
                     <span class="badge badge-pill badge-light">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-light">@EachProject.SecondaryTechnology</span>
                     <p class="card-text">@EachProject.Description</p>
                     <p class="card-text">Project Owner: @EachProject.Developer.UserName</p>
-                    <a type="button" class="btn btn-warning btn-sm" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
-                    <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@EachProject.Id">Delete Project</a>
+                    @if (EachProject.IsComplete == false)
+                    {
+                        <a type="button" class="btn btn-warning btn-sm" asp-action="CreateRole" asp-route-id="@EachProject.Id">Create Role</a>
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@EachProject.Id">Delete Project</a>
+                        <a type="button" class="btn btn-success btn-sm" asp-action="MarkComplete" asp-route-id="@EachProject.Id">Mark Completed</a>
+                    }
+                    else
+                    {
+                    <a href="#" type ="button" class="btn btn-warning disabled">Completed</a>
+                      }
+
                     <p>Open Roles</p>
                     @foreach (var EachOpening in EachProject.Openings)
                     {@if (EachOpening.IsFilled == false)
@@ -122,7 +131,7 @@
                                 <span class="badge badge-pill badge-danger">Expert</span>
                             }
                         }
-                        
+
                     }
 
 
@@ -132,7 +141,7 @@
 
 
                 </div>
-                <a type="button" class="btn btn-success" asp-action="MarkComplete" asp-route-id="@EachProject.Id">Mark Completed</a>      
+                      
 </div>
         }
         </div>
