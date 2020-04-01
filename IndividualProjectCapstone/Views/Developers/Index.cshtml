@@ -5,148 +5,114 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
+<br />
+<div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-2">User</div>
+        <div class="col-4"><input type="text" id="userInput" /></div>
+    </div>
+    <div class="row">
+        <div class="col-2">Message</div>
+        <div class="col-4"><input type="text" id="messageInput" /></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
 @* I will be going with a card design for this project *@
 
-    <br />
-    <h1>Available Projects</h1>
-    <div class="card-deck" style="width: 100%">
-        @foreach (var EachProject in Model.AllProjects)
-        {
-            <div class="card text-white bg-primary m-2 p-2" style="min-width: 20rem; min-height: 30rem;" >
-                <div class="card-header">@EachProject.Name</div>
-                <div class="card-body text-center">
-                    <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
-                    <p class="card-text">@EachProject.Description</p>
-                    <p class="card-text">Project Owner: <a asp-action="ProfileIndex" asp-route-id="@EachProject.DeveloperId">@EachProject.Developer.UserName</a></p>
-                    <p>Open Roles</p>
-                    @foreach (var EachOpening in EachProject.Openings)
-                    {@if (EachOpening.IsFilled == false)
-                        {<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
-                    <p class="card-text">
-                        @if (EachOpening.RoleId == 1)
-                        {
-                            <span class="badge badge-pill badge-info">Front-end</span>
-                        }
-                        else if (EachOpening.RoleId == 2)
-                        {
-                            <span class="badge badge-pill badge-info">Back-end</span>
-                        }
-                        else if (EachOpening.RoleId == 3)
-                        {
-                            <span class="badge badge-pill badge-info">Full-Stack</span>
-
-                        }
-                        else
-                        {
-                            <span class="badge badge-pill badge-info">DT-Engineer</span>
-                        }:
-                        @if (EachOpening.ProficiencyLevelNeeded == 1)
-                        {
-                            <span class="badge badge-pill badge-success">Beginner</span>
-                        }
-                        else if (EachOpening.ProficiencyLevelNeeded == 2)
-                        {
-                            <span class="badge badge-pill badge-warning">Intermediate</span>
-                        }
-                        else if (EachOpening.ProficiencyLevelNeeded == 3)
-                        {
-                            <span class="badge badge-pill badge-light">Advanced</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-pill badge-danger">Expert</span>
-                        }
-                    </p>
-                </a>
-    }
-}
-    <p>Current Members</p>
-
-
-
-    @if (EachProject.DeveloperMembers.Count == 0)
+<br />
+<h1>Available Projects</h1>
+<div class="card-deck" style="width: 100%">
+    @foreach (var EachProject in Model.AllProjects)
     {
-        <p class="card-text text-warning">No current members</p>
-    }
-    else
-    {
-        @foreach (var EachMember in EachProject.DeveloperMembers)
-        {
-                <span class="badge badge-pill badge-info">
-                    <a asp-action="ProfileIndex" asp-route-id="@EachMember.Id">@EachMember.UserName</a>
-                </span>
+        <div class="card text-white bg-primary m-2 p-2" style="min-width: 20rem; min-height: 30rem;">
+            <div class="card-header">@EachProject.Name</div>
+            <div class="card-body text-center">
+                <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
+                <p class="card-text">@EachProject.Description</p>
+                <p class="card-text">Project Owner: <a asp-action="ProfileIndex" asp-route-id="@EachProject.DeveloperId">@EachProject.Developer.UserName</a></p>
+                <p>Open Roles</p>
+                @foreach (var EachOpening in EachProject.Openings)
+                {@if (EachOpening.IsFilled == false)
+                    {<a asp-action="RoleIndex" asp-route-id="@EachOpening.Id">
+                            <p class="card-text">
+                                @if (EachOpening.RoleId == 1)
+                                {
+                                    <span class="badge badge-pill badge-info">Front-end</span>
+                                }
+                                else if (EachOpening.RoleId == 2)
+                                {
+                                    <span class="badge badge-pill badge-info">Back-end</span>
+                                }
+                                else if (EachOpening.RoleId == 3)
+                                {
+                                    <span class="badge badge-pill badge-info">Full-Stack</span>
 
-                }
-
-            
-            
-                }
-
-</div>
-            </div>
-        }
-    </div>
-
-
-
-
-
-
-    @*OLD MATERIAL - TO BE REPLACED
-        <table class="table">
-        <thead>
-            <tr>
-
-                <th>
-                    Project
-                </th>
-                <th>
-                    Owner
-                </th>
-                <th>
-                    Roles Needed
-                </th>
-                <th>
-                        @Html.DisplayNameFor(model => model.DeveloperType)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProficiencyLevel)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AboutUser)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DeveloperType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProficiencyLevel)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AboutUser)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-pill badge-info">DT-Engineer</span>
+                                }:
+                                @if (EachOpening.ProficiencyLevelNeeded == 1)
+                                {
+                                    <span class="badge badge-pill badge-success">Beginner</span>
+                                }
+                                else if (EachOpening.ProficiencyLevelNeeded == 2)
+                                {
+                                    <span class="badge badge-pill badge-warning">Intermediate</span>
+                                }
+                                else if (EachOpening.ProficiencyLevelNeeded == 3)
+                                {
+                                    <span class="badge badge-pill badge-light">Advanced</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-pill badge-danger">Expert</span>
+                                }
+                            </p>
+                        </a>
+                    }
             }
-        </tbody>
-    </table>*@
+                <p>Current Members</p>
+
+
+
+                @if (EachProject.DeveloperMembers.Count == 0)
+                {
+                    <p class="card-text text-warning">No current members</p>
+                }
+                else
+                {
+                    @foreach (var EachMember in EachProject.DeveloperMembers)
+                    {
+                        <span class="badge badge-pill badge-info">
+                            <a asp-action="ProfileIndex" asp-route-id="@EachMember.Id">@EachMember.UserName</a>
+                        </span>
+
+                    }
+
+
+
+                }
+
+            </div>
+        </div>
+    }
+</div>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
