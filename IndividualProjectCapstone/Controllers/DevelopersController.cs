@@ -190,14 +190,36 @@ namespace IndividualProjectCapstone.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", developer.UserId);
             return RedirectToAction(nameof(Index));
         }
-        // GET: Projects/Create
+
+        // GET: Developers/Create
+        public IActionResult CreateReview(int id)
+        {
+            ReviewModel reviewModel = new ReviewModel();
+            reviewModel.Developer = _context.Developers.FirstOrDefault(m => m.Id == id);
+            return View(reviewModel);
+        }
+
+        // POST: Developers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateReview(ReviewModel reviewModel)
+        {
+            _context.Reviews.Add(reviewModel.Review);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // GET: Developers/CreateProject
         public IActionResult CreateProject()
         {
             
             return View();
         }
 
-        // POST: Developers/Create
+        // POST: Developers/CreateProject
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]

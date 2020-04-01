@@ -1,0 +1,35 @@
+﻿@model IndividualProjectCapstone.Models.ReviewModel
+
+@{
+    ViewData["Title"] = "CreateReview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h1>Create A Review For: @Model.Developer.UserName</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateReview">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Review.ReviewScore" class="control-label"></label>
+                <input asp-for="Review.ReviewScore" class="form-control" />
+                <span asp-validation-for="Review.ReviewScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Review.ReviewContent" class="control-label"></label>
+                <input asp-for="Review.ReviewContent" class="form-control" />
+                <span asp-validation-for="Review.ReviewContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
