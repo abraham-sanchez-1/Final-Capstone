@@ -4,35 +4,14 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
+    </head>
 <br />
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">User</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
-    </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>
+
 @* I will be going with a card design for this project *@
 
 <br />
@@ -45,7 +24,9 @@
             <div class="card-body text-center">
                 <span class="badge badge-pill badge-info">@EachProject.PrimaryTechnology</span><span class="badge badge-pill badge-info">@EachProject.SecondaryTechnology</span>
                 <p class="card-text">@EachProject.Description</p>
-                <p class="card-text">Project Owner: <a asp-action="ProfileIndex" asp-route-id="@EachProject.DeveloperId">@EachProject.Developer.UserName</a></p>
+                <p class="card-text">Project Owner: <a asp-action="ProfileIndex" asp-route-id="@EachProject.DeveloperId">@EachProject.Developer.UserName</a>
+                <a type="button" class="btn btn-info btn-sm" href="#ex1" rel="modal:open">See Messages!</a>
+                </p>
                 <p>Open Roles</p>
                 @foreach (var EachOpening in EachProject.Openings)
                 {@if (EachOpening.IsFilled == false)
@@ -114,5 +95,44 @@
         </div>
     }
 </div>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+
+@* Signalr implementation, group chat ability *@
+<div id="ex1" class="modal" style="max-height: 100%;overflow-y:auto">
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                <form class="form-inline">
+                    <div class="input-prepend input-append">
+                        <input type="text" name="group-message" id="group-message-text" placeholder="Type a message" />
+                        <input type="text" name="group-name" id="group-name" placeholder="Type a group name" />
+                        <input type="button" id="groupmsg" class="btn btn-primary" value="Send to Group" />
+                        <input type="button" id="join-group" class="btn btn-primary" value="Join Group" />
+                        <input type="button" id="leave-group" class="btn btn-primary" value="Leave Group" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">&nbsp;</div>
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>
+    </div>
+    <a href="#" rel="modal:close">Close</a>
+</div>
+
+    @* Signalr scripts *@
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+
+    @* Modal Scripts *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -372,7 +372,7 @@ namespace IndividualProjectCapstone.Controllers
             Opening opening = await _context.Openings.FirstOrDefaultAsync(m => m.Id == pendingApplication.OpeningId);
             var developer = await _context.Developers.FirstOrDefaultAsync(a => a.Id == pendingApplication.DeveloperId);
             var project = await _context.Projects.FirstOrDefaultAsync(m => m.Id == opening.ProjectId);
-            var projectName = _context.Projects.Where(m => m.Id == opening.ProjectId).Select(m => m.Name);
+            var projectName = _context.Projects.Where(m => m.Id == opening.ProjectId).Select(m => m.Name).FirstOrDefault();
 
             var currentUser = _context.Users.FirstOrDefault(m => m.Id == userId);
             ProjectMember projectMember = new ProjectMember();
