@@ -46,6 +46,14 @@
                 <span class="badge badge-pill badge-warning">Expert</span>
             }
         </p>
+        <div class="container border-info">
+            @foreach (var review in Model.Reviews)
+            {
+                <div class="container border-primary">
+                    <p>Score: @review.ReviewScore | Review: @review.ReviewContent</p>
+                </div>
+            }
+        </div>
     </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Developer.Id">Edit</a> |
