@@ -8,8 +8,8 @@
 
 @* Row layout, left are active projects, right is completed project with option to leave reviews *@
 <br />
-    <div class="row">
-        <div class="container col-5">
+    <div class="row" style="width:100%">
+        <div class="container col-5 bg-light" style="width: 100%">
             <h2>Active Projects</h2>
             @if (Model.ActiveProjects.Count() == 0)
             {
@@ -20,8 +20,8 @@
             else
             {
 
-
-            <table class="table">
+        <div class="table-responsive">
+            <table class="table table-sm">
                 <thead>
                     <tr>
                         <th>
@@ -31,7 +31,7 @@
                             Project Lead
                         </th>
                         <th>
-
+                            Github Link
                         </th>
                         <th>
                             <input class="form-inline form-control" id="myInput" type="text" placeholder="Filter">
@@ -49,18 +49,20 @@
                                 @Html.DisplayFor(modelItem => item.Developer.UserName)
                             </td>
                             <td>
-                                <a type="button" class="btn btn-success" asp-action="ProjectDetails" asp-route-id="@item.Id">Project Details</a>
+                                @Html.DisplayFor(modelItem => item.GithubUrl)
                             </td>
                             <td>
-                                <a type="button" class="btn btn-danger" asp-action="LeaveProject" asp-route-id="@item.Id">Details</a>
+                                <a type="button" class="btn btn-danger btn-sm" asp-action="LeaveProject" asp-route-id="@item.Id">Leave Project</a>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+        </div>
             }
         </div>
         @* Table containing completed projects *@
+        <div class="container col-1"></div>
     <div class="container col-5">
         <h2>Completed Projects</h2>
         @if (Model.CompletedProjects.Count() == 0)

@@ -417,6 +417,17 @@ namespace IndividualProjectCapstone.Controllers
             return RedirectToAction(nameof(ProjectIndex));
         }
 
+        //Leave a project
+        public async Task<IActionResult> LeaveProject(int Id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var developer = _context.Developers.FirstOrDefault(a => a.UserId == userId);
+            var projectMember = await _context.ProjectMembers.FirstOrDefaultAsync(m => (m.DeveloperId == developer.Id) && (m.ProjectId == Id));
+            _context.ProjectMembers.Remove(projectMember);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ActiveProjectIndex));
+        }
+
         // GET: Developers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
