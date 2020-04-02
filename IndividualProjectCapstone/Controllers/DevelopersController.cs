@@ -392,7 +392,7 @@ namespace IndividualProjectCapstone.Controllers
             var to = new EmailAddress(pendingApplication.Email, developer.UserName);
             var subject = "Your application has been accepted for project: " + projectName;
             var plainTextContent = "Here is your link to joing the githubt repository! Link: " + project.GithubUrl;
-            var htmlContent = "<strong>Get your CodeSquad on!!!</strong>";
+            var htmlContent = "<strong>Get your CodeSquad on!!! </strong>" + plainTextContent;
             var msg = MailHelper.CreateSingleEmail(
                 from,
                 to,
